@@ -10,19 +10,19 @@ from urllib3.exceptions import ProtocolError
 import json
 import time
 
-def search_and_save_results(file_path):
+def search_and_save_results(file_path, start_index, end_index):
     search = SearxSearchWrapper(searx_host="http://127.0.0.1:8080")
     with open(file_path, 'r') as file:
         results_dict = {}
-        i = 0 ### counter
+        i = 0
         for line in file:
-            if 1000 <= i < 1100:  ### range
+            if start_index <= i < end_index:  # range
                 iso_code, sentence = line.strip().split('\t')
                 try:
                     results = retry_request(
                         lambda: search.results(
                             sentence,
-                            num_results=25,
+                            num_results=50,
                             engines=["bing", "yahoo", "qwant", "duckduckgo"]
                         )
                     )
@@ -30,10 +30,10 @@ def search_and_save_results(file_path):
                 except RequestException as e:
                     print(f"Error occurred: {e}")
                     continue
-            if i == 1100:  ### end point
+            if i == end_index:  # end point
                 break
             i += 1 # increment
-    with open('1000-1100.json', 'w') as json_file:  ### file name
+    with open(f'{start_index}-{end_index}.json', 'w') as json_file:  # file name
         json.dump(results_dict, json_file, indent=4)
 
 def retry_request(request_func, max_retries=3):
