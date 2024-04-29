@@ -27,3 +27,15 @@ search:
     - html
     - json
 ```
+
+**modify uwsgi.ini :**
+In the `${PWD}/searxng` directory, there is a file named `uwsgi.ini`. In that file you need to modify buffer-size. Default is 8k. Increasing to 9k sometimes help with 'Internal Error 500'.
+
+Default Value:
+```ini
+buffer-size = 8192
+```
+Change to:
+```ini
+buffer-size = 9216
+```
