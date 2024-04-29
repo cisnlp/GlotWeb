@@ -23,7 +23,7 @@ def search_and_save_results(file_path):
                         lambda: search.results(
                             sentence,
                             num_results=25,
-                            engines=["bing", "yahoo"]
+                            engines=["bing", "yahoo", "qwant", "duckduckgo"]
                         )
                     )
                     results_dict[iso_code] = results
