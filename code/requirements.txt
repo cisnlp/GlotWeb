@@ -4,3 +4,4 @@ fasttext
 huggingface-hub
 BeautifulSoup
 urllib3
+trafilatura
