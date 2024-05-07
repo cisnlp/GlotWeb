@@ -1,0 +1,89 @@
+#IMPORTS
+
+import os
+import re
+import json
+from trafilatura import extract
+from trafilatura import fetch_url
+import fasttext
+from huggingface_hub import hf_hub_download
+import urllib3
+
+#FUNCTIONS
+
+def remove_entries_with_domains(json_data, domain_file):
+    with open(domain_file, 'r') as f:
+        domains = [line.strip() for line in f.readlines()]
+    
+    for iso_key, entries in json_data.items():
+        json_data[iso_key] = [entry for entry in entries if 'link' in entry and not any(domain in entry['link'] for domain in domains)]
+    
+    return json_data
+
+
+def extract_language_code(input_str):
+    pattern = r'__(label)__([a-zA-Z]+_[a-zA-Z]+)'
+    match = re.search(pattern, input_str)
+    if match:
+        return match.group(2)
+    else:
+        return None
+
+def trafilatura_scrape(url):
+  document = fetch_url(url)
+  text = extract(document)
+
+  return text
+
+def scraped_lang_filter(filtered_data, model, iso_list):
+    lang_filtered_data = {}
+    for key in filtered_data:
+        entry = filtered_data[key]
+        new_entry = []
+        for item in entry:
+            link = item['link']
+            scraped_text = trafilatura_scrape(link)
+            if scraped_text is not None:
+                lid_label_script = model.predict(scraped_text.replace('\n', ''))
+                lid_label = extract_language_code(lid_label_script[0][0])
+                #print("lid_label:", lid_label)  # Add this line for debugging
+                if lid_label not in iso_list:
+                    new_entry.append(item)
+                    if key not in lang_filtered_data:
+                        lang_filtered_data[key] = []
+                    lang_filtered_data[key].append(item)
+        #print("new_entry:", new_entry)  # Add this line for debugging
+        # Save new_entry as JSON file
+        if(len(new_entry)>0):
+          filename = f"{key}.json"
+          directory = "/content/drive/MyDrive/glotsparse/search_dump/lang_dump_individual"
+          os.makedirs(directory, exist_ok=True)  # Create directory if it doesn't exist
+          filepath = os.path.join(directory, filename)
+          with open(filepath, "w", encoding='utf-8') as json_file:
+              json.dump(new_entry, json_file, ensure_ascii = False)
+    print("lang_filtered_data:", lang_filtered_data)  # Add this line for debugging
+    return lang_filtered_data
+
+#Execution
+
+model_path = hf_hub_download(repo_id="cis-lmu/glotlid", filename="model.bin")
+model = fasttext.load_model(model_path)
+
+filename = '100-200.json'
+### Load Json dump of web search.
+with open(filename, 'r') as json_file:
+    data = json.load(json_file)
+### ISO code list of top 200 languages
+with open('iso_list.json', 'r') as f:
+    iso_list = json.load(f)
+
+### Filter searches using filterlist.txt
+filtered_data = remove_entries_with_domains(data, 'filterlist.txt')
+#scraped_lang_filtered_data = scraped_lang_filter(filtered_data, model, iso_list)
+urllib3.disable_warnings()
+scraped_lang_filtered_data = scraped_lang_filter(filtered_data, model, iso_list)
+filepath = f"{filename}_filtered.json"
+
+# Save dictionary as JSON file
+with open(filepath, "w", encoding='utf-8') as json_file:
+    json.dump(scraped_lang_filtered_data, json_file, ensure_ascii = False)
