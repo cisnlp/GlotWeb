@@ -3,7 +3,7 @@
 This project is designed to read seed URLs from a JSON file, crawl those websites, and detect specific languages in the content. The script leverages GlotLID FastText model for language detection and uses Trafilatura for content extraction from web pages.
 
 ## Table of Contents
-- Prerequisites
+- [Prerequisites](#prerequisites)
 - [Usage](#usage)
 - [Configuration](#configuration)
 - [Classes and Methods](#classes-and-methods)
