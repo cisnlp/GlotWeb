@@ -83,6 +83,13 @@ aak	O xewanɨŋo na'nɨ re rɨnɨŋɨnigɨnɨ, ‘A'mɨna' sea'yɨ e imo'nɨŋa'
 ```
 The iso code for the input text file can be either 2 lettered format or 3 lettered format.
 
+### Usage
+Run the script using:
+
+```bash
+python search_service.py
+```
+
 # Step 2: Filter and generate seeds
 
 # Step 3: Seacrch and scrape with seeds
