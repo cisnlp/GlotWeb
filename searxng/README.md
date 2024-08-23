@@ -3,9 +3,6 @@
 ### Install
 ```bash
 
-
-mkdir my-instance
-cd my-instance
 export PORT=8080
 
 docker pull searxng/searxng
