@@ -81,6 +81,7 @@ aa	Itiyobbiyah agattinoona sittal xayyossa yangalen qaadoodih baari gablusaanama
 aai	Baise orot ta’ita’imon matah toniwa’an bar hinanutitiy gewas hinawowab.
 aak	O xewanɨŋo na'nɨ re rɨnɨŋɨnigɨnɨ, ‘A'mɨna' sea'yɨ e imo'nɨŋa' wonɨrɨnɨ.’
 ```
+The iso code for the input text file can be either 2 lettered format or 3 lettered format.
 
 # Step 2: Filter and generate seeds
 
