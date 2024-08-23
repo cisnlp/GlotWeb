@@ -39,3 +39,14 @@ Change to:
 buffer-size = 9216
 ```
 
+## Search Service Script: search_service.py
+
+This is an object-oriented Python script that leverages the Searx API to perform searches and save the results to JSON files. The script is configurable using a YAML configuration file called 'search_config.yaml'.
+
+## Features
+
+- Uses SearxSearchWrapper for querying multiple search engines.
+- Handles retries for failed requests.
+- Configurable search parameters through a YAML file.
+- Configurable input file, search range, output directory, and other parameters.
+- Automatically saves results in a structured JSON format.
