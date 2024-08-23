@@ -69,6 +69,18 @@ input_file: "input.txt"  # Path to the input file containing search queries
 start_index: 0  # Start index for queries to process
 end_index: 10  # End index for queries to process
 ```
+### Input file format:
+The input file should be a tab-separated file where each line contains an ISO code and a sentence for search:
+```txt
+ISO_CODE_1    Search query 1
+ISO_CODE_2    Search query 2
+```
+
+```txt
+aa	Itiyobbiyah agattinoona sittal xayyossa yangalen qaadoodih baari gablusaanamah angicille le.
+aai	Baise orot ta’ita’imon matah toniwa’an bar hinanutitiy gewas hinawowab.
+aak	O xewanɨŋo na'nɨ re rɨnɨŋɨnigɨnɨ, ‘A'mɨna' sea'yɨ e imo'nɨŋa' wonɨrɨnɨ.’
+```
 
 # Step 2: Filter and generate seeds
 
