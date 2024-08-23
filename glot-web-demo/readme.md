@@ -89,6 +89,14 @@ Run the script using:
 ```bash
 python search_service.py
 ```
+The search results will be saved in the specified output directory (e.g., search_dump) as JSON files named according to the specified prefix and index range, e.g., results_0-10.json.
+
+### Customization
+You can easily adjust the following parameters in the config.yaml file:
+
+- Search engines: Add or remove engines in the engines list.
+- Search range: Modify start_index and end_index to control which lines in the input file are processed.
+- Output directory: Change output_directory to save results in a different location.
 
 # Step 2: Filter and generate seeds
 
