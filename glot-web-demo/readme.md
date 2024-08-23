@@ -69,3 +69,7 @@ input_file: "input.txt"  # Path to the input file containing search queries
 start_index: 0  # Start index for queries to process
 end_index: 10  # End index for queries to process
 ```
+
+# Step 2: Filter and generate seeds
+
+# Step 3: Seacrch and scrape with seeds
