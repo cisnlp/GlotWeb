@@ -269,8 +269,14 @@ class LanguageDetector:
             scraped_text = self.trafilatura_scrape(link)
             lid_label, lid_confidence = self.language_predict(scraped_text)
             if (lid_label == input_label) and (lid_confidence >= confidence):
-                return {"link": link, "lid_label": lid_label, "lid_confidence": lid_confidence}
-            return None
+                return {
+                    "link": link,
+                    "lid_label": lid_label,
+                    "lid_confidence": lid_confidence,
+                    "scraped_text": scraped_text  # Add scraped text to the dictionary
+        }
+            return None 
+
 
         with ThreadPoolExecutor(max_workers=seed_crawler_config['max_workers']) as executor:
             futures = {executor.submit(filter_link, link): link for link in links}
@@ -324,6 +330,7 @@ if __name__ == "__main__":
     output_dir = output_config['directory']
     os.makedirs(output_dir, exist_ok=True)
 
+    # Save the final list as a JSON file
     # Save the final list as a JSON file
     output_file = os.path.join(output_dir, output_config['output_file_name'].format(language=input_label))
 
