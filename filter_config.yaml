@@ -1,0 +1,5 @@
+model_path: "model_v3.bin"
+json_filename: "search_dump/900-1000_n.json"
+iso_list_file: "iso_list.json"
+domain_file: "filterlist.txt"
+output_directory: "lang_dump_confidence"

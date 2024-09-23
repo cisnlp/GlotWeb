@@ -39,3 +39,5 @@ executor:
 url_settings:
   max_url_length: 65536 # Maximum URL length allowed
   request_timeout: 10 # Timeout for HTTP requests in seconds
+
+domain_file: "filterlist.txt"

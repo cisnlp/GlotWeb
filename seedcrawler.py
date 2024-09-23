@@ -1,34 +1,15 @@
 import os
 import re
 import requests
-import yaml
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin, urlparse
 import time
 import json
 from typing import List, Dict, Any
-from tqdm import tqdm
+from tqdm import tqdm  # Import tqdm for progress bar
 from trafilatura import extract, fetch_url
 import fasttext
 import urllib3
-from concurrent.futures import ThreadPoolExecutor, as_completed
-
-# Load YAML configuration
-with open('config.yaml', 'r') as config_file:
-    config = yaml.safe_load(config_file)
-
-# Extract configuration settings
-seed_reader_config = config['seed_reader']
-seed_crawler_config = config['seed_crawler']
-language_detector_config = config['language_detector']
-output_config = config['output']
-logging_config = config['logging']
-progress_bar_config = config['progress_bar']
-executor_config = config['executor']
-url_settings = config['url_settings']
-
-# Increase max URL length if needed
-urllib3.util.url.MAX_URL_LENGTH = url_settings['max_url_length']
 
 class SeedReader:
     def __init__(self, json_file_path: str):
@@ -106,7 +87,7 @@ class SeedReader:
 
 
 class SeedCrawler:
-    def __init__(self, seed_url, max_pages=seed_crawler_config['max_pages']):
+    def __init__(self, seed_url, max_pages=100):
         """
         Initializes the SeedCrawler with a seed URL and maximum pages to crawl.
         
@@ -128,7 +109,7 @@ class SeedCrawler:
         :return: A set of links belonging to the specified domain.
         """
         try:
-            response = requests.get(url, timeout=url_settings['request_timeout'])
+            response = requests.get(url, timeout=10)
             response.raise_for_status()  # Raise an error for bad responses
         except (requests.RequestException, requests.HTTPError) as e:
             print(f"Error fetching {url}: {e}")
@@ -157,35 +138,24 @@ class SeedCrawler:
         :return: A set of all found links belonging to the specified domain.
         """
         print(f"Crawling links from: {self.seed_url}")
-        with ThreadPoolExecutor(max_workers=seed_crawler_config['max_workers']) as executor:
-            futures = {}
+        while self.to_visit and len(self.visited) < self.max_pages:
+            current_url = self.to_visit.pop(0)
             
-            while self.to_visit and len(self.visited) < self.max_pages:
-                current_url = self.to_visit.pop(0)
-                
-                if current_url in self.visited:
-                    continue
-                
-                future = executor.submit(self.get_links, current_url)
-                futures[future] = current_url
-                
-                # Sleep after submitting the request to be polite
-                time.sleep(seed_crawler_config['crawl_delay'])
-
-            for future in as_completed(futures):
-                current_url = futures[future]
-                try:
-                    links = future.result()
-                    self.all_links.update(links)
-                    
-                    # Add new links to the to_visit list
-                    for link in links:
-                        if link not in self.visited and link not in self.to_visit:
-                            self.to_visit.append(link)
-                    
-                    self.visited.add(current_url)
-                except Exception as e:
-                    print(f"Exception occurred while crawling {current_url}: {e}")
+            if current_url in self.visited:
+                continue
+            
+            #print(f"Crawling: {current_url}")
+            print("...")
+            links = self.get_links(current_url)
+            self.all_links.update(links)
+            
+            # Add new links to the to_visit list
+            for link in links:
+                if link not in self.visited and link not in self.to_visit:
+                    self.to_visit.append(link)
+            
+            self.visited.add(current_url)
+            time.sleep(1)  # Be polite and wait a bit before next request
 
         print(f"Finished crawling links from: {self.seed_url}")
         return self.all_links
@@ -264,38 +234,21 @@ class LanguageDetector:
             list: Filtered list of URLs matching the language criteria.
         """
         new_list = []
-
-        def filter_link(link):
+        # Use tqdm to add a progress bar to the loop
+        for link in tqdm(links, desc="Filtering scraped links", unit="link"):
             scraped_text = self.trafilatura_scrape(link)
             lid_label, lid_confidence = self.language_predict(scraped_text)
             if (lid_label == input_label) and (lid_confidence >= confidence):
-                return {
-                    "link": link,
-                    "lid_label": lid_label,
-                    "lid_confidence": lid_confidence,
-                    "scraped_text": scraped_text  # Add scraped text to the dictionary
-        }
-            return None 
-
-
-        with ThreadPoolExecutor(max_workers=seed_crawler_config['max_workers']) as executor:
-            futures = {executor.submit(filter_link, link): link for link in links}
-            
-            # Use tqdm to add a progress bar to the loop
-            for future in tqdm(as_completed(futures), desc="Filtering scraped links", unit="link", total=len(futures)):
-                result = future.result()
-                if result:
-                    new_list.append(result)
-
+                new_list.append({"link": link, "lid_label": lid_label, "lid_confidence": lid_confidence})
         return new_list
 
 
 # Example usage
 if __name__ == "__main__":
-    input_label = language_detector_config['desired_language']  # Replace with your JSON file name
-    json_file_path = os.path.join(seed_reader_config['input_directory'], seed_reader_config['json_file_name'])
-    input_confidence = language_detector_config['minimum_confidence']
-    model_path = language_detector_config['model_path']
+    input_label = "urd_Latn"  # Replace with your JSON file name
+    json_file_path = input_label + ".json"
+    input_confidence = 0.8
+    model_path = "model_v3.bin"
     
     # Load the model once
     model = fasttext.load_model(model_path)
@@ -307,33 +260,23 @@ if __name__ == "__main__":
     final_list = []
     lang_detector = LanguageDetector(model)  # Initialize once and reuse
     
-    with ThreadPoolExecutor(max_workers=executor_config['max_workers_reader']) as executor:
-        futures = []
+    for entry in all_data:
+        # if confidence level threshold condition met.
+        # initialize a big list of websites and put the seed in it.
+        
+        if entry['lid_confidence'] > input_confidence:
 
-        for entry in all_data:
-            # If confidence level threshold condition met.
-            # Initialize a big list of websites and put the seed in it.
-            
-            if entry['lid_confidence'] > input_confidence:
-                seed_url = entry['link']
-                crawler = SeedCrawler(seed_url, max_pages=seed_crawler_config['max_pages'])
-                futures.append(executor.submit(crawler.crawl_website))
+            seed_url = entry['link']
+            crawler = SeedCrawler(seed_url, max_pages=100)
+            all_website_links = crawler.crawl_website()
 
-        for future in as_completed(futures):
-            all_website_links = future.result()
             # Use the same LanguageDetector instance
             filtered_links = lang_detector.filter_seeds(all_website_links, input_label, input_confidence)
             final_list.extend(filtered_links)
-            print(filtered_links)
+            print(final_list)
 
-    # Create directory if it doesn't exist
-    output_dir = output_config['directory']
-    os.makedirs(output_dir, exist_ok=True)
-
-    # Save the final list as a JSON file
-    # Save the final list as a JSON file
-    output_file = os.path.join(output_dir, output_config['output_file_name'].format(language=input_label))
-
+    print(final_list)
+    output_file = f"{input_label}_crawled_output_single_thread.json"
     with open(output_file, 'w', encoding='utf-8') as file:
         json.dump(final_list, file, ensure_ascii=False, indent=4)
 
