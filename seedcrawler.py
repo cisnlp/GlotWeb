@@ -239,7 +239,7 @@ class LanguageDetector:
             scraped_text = self.trafilatura_scrape(link)
             lid_label, lid_confidence = self.language_predict(scraped_text)
             if (lid_label == input_label) and (lid_confidence >= confidence):
-                new_list.append({"link": link, "lid_label": lid_label, "lid_confidence": lid_confidence})
+                new_list.append({"link": link, "lid_label": lid_label, "lid_confidence": lid_confidence, "scraped_text": scraped_text})
         return new_list
 
 
