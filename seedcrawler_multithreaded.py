@@ -304,8 +304,8 @@ class LanguageDetector:
 
 # Example usage
 if __name__ == "__main__":
-    input_label = language_detector_config['desired_language']  # Replace with your JSON file name
-    json_file_path = os.path.join(seed_reader_config['input_directory'], seed_reader_config['json_file_name'])
+    input_label = language_detector_config['desired_language']
+    json_file_path = os.path.join(seed_reader_config['input_directory'], f"{input_label}.json")
     input_confidence = language_detector_config['minimum_confidence']
     model_path = language_detector_config['model_path']
     
@@ -330,6 +330,7 @@ if __name__ == "__main__":
                 seed_url = entry['link']
                 crawler = SeedCrawler(seed_url, max_pages=seed_crawler_config['max_pages'])
                 futures.append(executor.submit(crawler.crawl_website))
+                
 
         for future in as_completed(futures):
             all_website_links = future.result()

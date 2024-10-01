@@ -1,1 +1,5 @@
 model_v3.bin
+input/
+output/
+search_dump/
+logs/
