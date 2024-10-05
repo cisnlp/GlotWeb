@@ -9,11 +9,12 @@ seed_crawler:
   max_pages: 100 # Maximum number of pages to crawl
   max_workers: 10 # Maximum number of threads for crawling
   crawl_delay: 0.1 # Delay between each crawling request in seconds
+  max_time: 1200 # Maximum crawl time in seconds
 
 # LanguageDetector configuration
 language_detector:
   model_path: "model_v3.bin" # Path to the FastText model file
-  desired_language: "kan_Latn" # Target language code
+  desired_language: "azj_Cyrl" # Target language code
   minimum_confidence: 0.8 # Minimum confidence score for language detection
 
 # Output configuration

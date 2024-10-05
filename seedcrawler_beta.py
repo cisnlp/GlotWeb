@@ -77,6 +77,7 @@ class SeedCrawler:
     def __init__(self, seed_url):
         self.seed_url = seed_url
         self.max_pages = config['seed_crawler']['max_pages']
+        self.max_time = config['seed_crawler']['max_time']
         self.domain = urlparse(seed_url).netloc
         self.visited = set()
         self.to_visit = [seed_url]
@@ -105,25 +106,37 @@ class SeedCrawler:
 
     def crawl_website(self):
         logging.info(f"Crawling links from: {self.seed_url}")
+        start_time = time.time()
         with tqdm(total=self.max_pages, disable=not config['progress_bar']['enabled']) as pbar:
             while self.to_visit and len(self.visited) < self.max_pages:
+                if time.time() - start_time > self.max_time:
+                    logging.info("Maximum crawl time reached. Stopping.")
+                    break
+
                 current_url = self.to_visit.pop(0)
-                
+
                 if current_url in self.visited:
                     continue
-                
+
                 links = self.get_links(current_url)
                 self.all_links.update(links)
-                
+
                 for link in links:
                     if link not in self.visited and link not in self.to_visit:
                         self.to_visit.append(link)
-                
+
                 self.visited.add(current_url)
                 time.sleep(config['seed_crawler']['crawl_delay'])
                 pbar.update(1)
 
+                # Check if we're making progress
+                if len(self.visited) % 10 == 0:  # Check every 10 pages
+                    if len(self.to_visit) > len(self.visited) * 10:
+                        logging.warning("To-visit list growing too fast. Possible circular link structure.")
+                        break
+
         logging.info(f"Finished crawling links from: {self.seed_url}")
+        logging.info(f"Visited {len(self.visited)} pages in {time.time() - start_time:.2f} seconds")
         return self.all_links
 
 class LanguageDetector:
