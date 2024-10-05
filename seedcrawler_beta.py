@@ -81,6 +81,7 @@ class SeedCrawler:
         self.max_time = config['seed_crawler']['max_time']
         self.visited = set()
         self.to_visit = list(set(seed_urls))  # Remove duplicates
+        self.to_visit_growth_factor = config['seed_crawler']['to_visit_growth_factor']
         self.all_links = set()
         self.session = requests.Session()
 
@@ -131,7 +132,7 @@ class SeedCrawler:
 
                 # Check if we're making progress
                 if len(self.visited) % 10 == 0:  # Check every 10 pages
-                    if len(self.to_visit) > len(self.visited) * 50:
+                    if len(self.to_visit) > len(self.visited) * self.to_visit_growth_factor:
                         logging.warning("To-visit list growing too fast. Possible circular link structure.")
                         break
 

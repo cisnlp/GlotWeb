@@ -10,6 +10,7 @@ seed_crawler:
   max_workers: 10 # Maximum number of threads for crawling
   crawl_delay: 0.1 # Delay between each crawling request in seconds
   max_time: 1200 # Maximum crawl time in seconds
+  to_visit_growth_factor: 50
 
 # LanguageDetector configuration
 language_detector:
