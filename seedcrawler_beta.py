@@ -131,7 +131,7 @@ class SeedCrawler:
 
                 # Check if we're making progress
                 if len(self.visited) % 10 == 0:  # Check every 10 pages
-                    if len(self.to_visit) > len(self.visited) * 10:
+                    if len(self.to_visit) > len(self.visited) * 50:
                         logging.warning("To-visit list growing too fast. Possible circular link structure.")
                         break
 
@@ -193,6 +193,18 @@ class LanguageDetector:
             logging.error(f"Error processing link {link}: {e}")
         return None
 
+def remove_entries_with_domains(final_list):
+        with open(config['domain_file'], 'r') as f:
+            domains = [line.strip() for line in f.readlines()]
+
+        # Filter the final_list
+        filtered_list = [
+            entry for entry in final_list 
+            if 'link' in entry and not any(domain in entry['link'] for domain in domains)
+        ]
+        
+        return filtered_list
+
 def save_to_json(data: List[Dict[str, Any]], filename: str):
     try:
         with open(filename, 'w', encoding='utf-8') as file:
@@ -211,6 +223,8 @@ if __name__ == "__main__":
     
     reader = SeedReader(json_file_path)
     all_data = reader.get_data()
+
+    all_data = remove_entries_with_domains(all_data)
 
     seed_urls = [entry['link'] for entry in all_data if entry['lid_confidence'] > input_confidence]
     
