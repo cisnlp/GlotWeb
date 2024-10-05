@@ -74,13 +74,13 @@ class SeedReader:
         return filtered_data
 
 class SeedCrawler:
-    def __init__(self, seed_url):
-        self.seed_url = seed_url
+
+    def __init__(self, seed_urls):
+        self.seed_urls = seed_urls
         self.max_pages = config['seed_crawler']['max_pages']
         self.max_time = config['seed_crawler']['max_time']
-        self.domain = urlparse(seed_url).netloc
         self.visited = set()
-        self.to_visit = [seed_url]
+        self.to_visit = list(set(seed_urls))  # Remove duplicates
         self.all_links = set()
         self.session = requests.Session()
 
@@ -99,13 +99,13 @@ class SeedCrawler:
             link = urljoin(url, anchor['href'])
             parsed_link = urlparse(link)
 
-            if parsed_link.netloc.endswith(self.domain) and len(link) <= config['url_settings']['max_url_length']:
+            if any(parsed_link.netloc.endswith(urlparse(seed).netloc) for seed in self.seed_urls) and len(link) <= config['url_settings']['max_url_length']:
                 links.add(link)
 
         return links
 
-    def crawl_website(self):
-        logging.info(f"Crawling links from: {self.seed_url}")
+    def crawl_websites(self):
+        logging.info(f"Crawling links from {len(self.seed_urls)} seed URLs")
         start_time = time.time()
         with tqdm(total=self.max_pages, disable=not config['progress_bar']['enabled']) as pbar:
             while self.to_visit and len(self.visited) < self.max_pages:
@@ -135,10 +135,10 @@ class SeedCrawler:
                         logging.warning("To-visit list growing too fast. Possible circular link structure.")
                         break
 
-        logging.info(f"Finished crawling links from: {self.seed_url}")
+        logging.info(f"Finished crawling links from {len(self.seed_urls)} seed URLs")
         logging.info(f"Visited {len(self.visited)} pages in {time.time() - start_time:.2f} seconds")
         return self.all_links
-
+    
 class LanguageDetector:
     def __init__(self, model):
         self.model = model
@@ -212,29 +212,25 @@ if __name__ == "__main__":
     reader = SeedReader(json_file_path)
     all_data = reader.get_data()
 
-    final_list = []
-    lang_detector = LanguageDetector(model)
+    seed_urls = [entry['link'] for entry in all_data if entry['lid_confidence'] > input_confidence]
     
-    for entry in all_data:
-        if entry['lid_confidence'] > input_confidence:
-            seed_url = entry['link']
-            crawler = SeedCrawler(seed_url)
-            all_website_links = crawler.crawl_website()
+    crawler = SeedCrawler(seed_urls)
+    all_website_links = crawler.crawl_websites()
 
-            save_to_json(list(all_website_links), os.path.join(config['output']['directory'], f"{input_label}_links_before_filter.json"))
+    save_to_json(list(all_website_links), os.path.join(config['output']['directory'], f"{input_label}_links_before_filter.json"))
 
-            filtered_links = lang_detector.filter_seeds(all_website_links, input_label, input_confidence)
-            logging.info(f"Number of filtered links: {len(filtered_links)}")
-            logging.debug(f"Sample of filtered links: {filtered_links[:5]}")
+    lang_detector = LanguageDetector(model)
+    filtered_links = lang_detector.filter_seeds(all_website_links, input_label, input_confidence)
+    
+    logging.info(f"Number of filtered links: {len(filtered_links)}")
+    logging.debug(f"Sample of filtered links: {filtered_links[:5]}")
 
-            save_to_json(filtered_links, os.path.join(config['output']['directory'], f"{input_label}_links_after_filter.json"))
-
-            final_list.extend(filtered_links)
+    save_to_json(filtered_links, os.path.join(config['output']['directory'], f"{input_label}_links_after_filter.json"))
 
     output_file = os.path.join(config['output']['directory'], config['output']['output_file_name'].format(language=input_label))
-    save_to_json(final_list, output_file)
+    save_to_json(filtered_links, output_file)
 
-    logging.info(f"Final list saved. Total links: {len(final_list)}")
+    logging.info(f"Final list saved. Total links: {len(filtered_links)}")
 
     if os.path.exists(output_file):
         file_size = os.path.getsize(output_file)
