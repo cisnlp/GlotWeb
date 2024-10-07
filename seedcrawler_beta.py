@@ -82,7 +82,7 @@ class SeedCrawler:
         self.visited = set()
         self.to_visit = list(set(seed_urls))  # Remove duplicates
         self.to_visit_growth_factor = config['seed_crawler']['to_visit_growth_factor']
-        self.all_links = set()
+        self.all_links = set(seed_urls)  # Initialize with seed URLs
         self.session = requests.Session()
 
     def get_links(self, url):
@@ -189,7 +189,10 @@ class LanguageDetector:
             logging.debug(f"Link: {link}, LID Label: {lid_label}, LID Confidence: {lid_confidence}")
             
             if lid_label == input_label and lid_confidence >= confidence:
-                return {"link": link, "lid_label": lid_label, "lid_confidence": lid_confidence}
+                if config['language_detector']['save_text'] == True:
+                    return {"link": link, "lid_label": lid_label, "lid_confidence": lid_confidence, "text": scraped_text}  
+                else:  
+                    return {"link": link, "lid_label": lid_label, "lid_confidence": lid_confidence}
         except Exception as e:
             logging.error(f"Error processing link {link}: {e}")
         return None
@@ -232,15 +235,15 @@ if __name__ == "__main__":
     crawler = SeedCrawler(seed_urls)
     all_website_links = crawler.crawl_websites()
 
-    save_to_json(list(all_website_links), os.path.join(config['output']['directory'], f"{input_label}_links_before_filter.json"))
+    # save_to_json(list(all_website_links), os.path.join(config['output']['directory'], f"{input_label}_links_before_filter.json"))
 
     lang_detector = LanguageDetector(model)
     filtered_links = lang_detector.filter_seeds(all_website_links, input_label, input_confidence)
     
     logging.info(f"Number of filtered links: {len(filtered_links)}")
-    logging.debug(f"Sample of filtered links: {filtered_links[:5]}")
+    #logging.debug(f"Sample of filtered links: {filtered_links[:5]}")
 
-    save_to_json(filtered_links, os.path.join(config['output']['directory'], f"{input_label}_links_after_filter.json"))
+    # save_to_json(filtered_links, os.path.join(config['output']['directory'], f"{input_label}_links_after_filter.json"))
 
     output_file = os.path.join(config['output']['directory'], config['output']['output_file_name'].format(language=input_label))
     save_to_json(filtered_links, output_file)
