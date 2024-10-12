@@ -93,8 +93,22 @@ class SeedCrawler:
             logging.error(f"Error fetching {url}: {e}")
             return set()
 
-        soup = BeautifulSoup(response.text, 'html.parser')
         links = set()
+        
+        # Try parsing with 'html.parser' first
+        try:
+            soup = BeautifulSoup(response.text, 'html.parser')
+        except Exception as e:
+            logging.warning(f"Error parsing {url} with html.parser: {e}")
+            # Fallback to 'lxml' parser if available
+            try:
+                soup = BeautifulSoup(response.text, 'lxml')
+            except ImportError:
+                logging.error("lxml parser not available. Unable to parse the page.")
+                return set()
+            except Exception as e:
+                logging.error(f"Error parsing {url} with lxml: {e}")
+                return set()
 
         for anchor in soup.find_all('a', href=True):
             link = urljoin(url, anchor['href'])

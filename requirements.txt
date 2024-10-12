@@ -2,7 +2,7 @@ langchain-community
 langchain-core
 fasttext
 huggingface-hub
-BeautifulSoup
+beautifulsoup4
 urllib3
 trafilatura
 lxml
