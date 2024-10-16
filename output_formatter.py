@@ -173,6 +173,8 @@ speakers = get_speakers(code)
 language_info = {
     "Language Name": lang_name,
     "Number of Speakers": speakers if speakers is not None else "No data",
+    "Family":'',
+    "Subgrouping": '',
     "Supported by allenai/MADLAD-400": is_in_madlad(code),
     "Supported by facebook/flores": is_in_flores(langisocode693_Script),
     "Supported by cis-lmu/Glot500": is_in_glot500(langisocode693_Script)
