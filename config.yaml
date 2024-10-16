@@ -15,7 +15,7 @@ seed_crawler:
 # LanguageDetector configuration
 language_detector:
   model_path: "model_v3.bin" # Path to the FastText model file
-  desired_language: "abk_Cyrl" # Target language code
+  desired_language: "aeu_Latn" # Target language code
   minimum_confidence: 0.7 # Minimum confidence score for language detection
   save_text: True
 
@@ -23,6 +23,8 @@ language_detector:
 output:
   directory: "output/final/" # Directory to save output JSON files
   output_file_name: "{language}_crawled_output.json" # Output file pattern
+  formated_directory: "output/formatted/"
+  formated_file_name: "{language}.json"
 
 # Logging configuration
 logging:

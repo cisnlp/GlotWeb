@@ -1,0 +1,179 @@
+Language-Script    Sent    Family    Head    Language-Script    Sent    Family    Head    Language-Script    Sent    Family    Head
+hbs_Latn    63411156    indo1319    vec_Latn    514240    indo1319    swh_Latn    95776    atla1278    yes
+mal_Mlym    48098273    drav1251    yes    jpn_Jpan    510722    japo1237    yes    alt_Cyrl    95148    turk1311
+aze_Latn    46300705    yes    lus_Latn    509250    sino1245    rmn_Grek    94533    indo1319
+guj_Gujr    45738685    indo1319    yes    crs_Latn    508755    indo1319    miq_Latn    94343    misu1242
+ben_Beng    43514870    indo1319    yes    kqn_Latn    507913    atla1278    kaa_Cyrl    88815    turk1311
+kan_Knda    41836495    drav1251    yes    ndo_Latn    496613    atla1278    kos_Latn    88603    aust1307
+tel_Telu    41580525    drav1251    yes    snd_Arab    488730    indo1319    yes    grn_Latn    87568
+mlt_Latn    40654838    afro1255    yue_Hani    484700    sino1245    lhu_Latn    87255    sino1245
+fra_Latn    39197581    indo1319    yes    tiv_Latn    483064    atla1278    lzh_Hani    86035    sino1245
+spa_Latn    37286756    indo1319    yes    kua_Latn    473535    atla1278    ajp_Arab    83297    afro1255
+eng_Latn    36122761    indo1319    yes    kwy_Latn    473274    atla1278    cmn_Hani    80745    sino1245    yes
+fil_Latn    33493255    aust1307    yes    hin_Latn    466175    indo1319    gcf_Latn    80737    indo1319
+nob_Latn    32869205    indo1319    iku_Cans    465011    rmn_Cyrl    79925    indo1319
+rus_Cyrl    31787973    indo1319    yes    kal_Latn    462430    eski1264    kjh_Cyrl    79262    turk1311
+deu_Latn    31015993    indo1319    yes    tdt_Latn    459818    aust1307    rng_Latn    78177    atla1278
+tur_Latn    29184662    turk1311    yes    gsw_Latn    449240    indo1319    mgh_Latn    78117    atla1278
+pan_Guru    29052537    indo1319    yes    mfe_Latn    447435    indo1319    xmv_Latn    77896    aust1307
+mar_Deva    28748897    indo1319    yes    swc_Latn    446378    atla1278    ige_Latn    77114    atla1278
+por_Latn    27824391    indo1319    yes    mon_Latn    437950    mong1349    rmy_Latn    76991    indo1319
+nld_Latn    25061426    indo1319    yes    mos_Latn    437666    atla1278    srm_Latn    76884    indo1319
+ara_Arab    24524122    yes    kik_Latn    437228    atla1278    bak_Latn    76809    turk1311
+zho_Hani    24143786    yes    cnh_Latn    436667    sino1245    gur_Latn    76151    atla1278
+ita_Latn    23539857    indo1319    yes    gil_Latn    434529    aust1307    idu_Latn    75106    atla1278
+ind_Latn    23018106    aust1307    yes    pon_Latn    434522    aust1307    yom_Latn    74818    atla1278
+ell_Grek    22033282    indo1319    yes    umb_Latn    431589    atla1278    tdx_Latn    74430    aust1307
+bul_Cyrl    21823004    indo1319    yes    lvs_Latn    422952    indo1319    mzn_Arab    73719    indo1319
+swe_Latn    20725883    indo1319    yes    sco_Latn    411591    indo1319    cfm_Latn    70227    sino1245
+ces_Latn    20376340    indo1319    yes    ori_Orya    410827    yes    zpa_Latn    69237    otom1299
+isl_Latn    19547941    indo1319    yes    arg_Latn    410683    indo1319    kbd_Cyrl    67914    abkh1242
+pol_Latn    19339945    indo1319    yes    kur_Latn    407169    indo1319    yes    lao_Laoo    66966    taik1256    yes
+ron_Latn    19190217    indo1319    yes    dhv_Latn    405711    aust1307    nap_Latn    65826    indo1319
+dan_Latn    19174573    indo1319    yes    luo_Latn    398974    nilo1247    qub_Latn    64973    quec1387
+hun_Latn    18800025    ural1272    yes    lun_Latn    395764    atla1278    oke_Latn    64508    atla1278
+tgk_Cyrl    18659517    indo1319    nzi_Latn    394247    atla1278    ote_Latn    64224    otom1299
+srp_Latn    18371769    indo1319    yes    gug_Latn    392227    tupi1275    bsb_Latn    63634    aust1307
+fas_Arab    18277593    yes    bar_Latn    387070    indo1319    ogo_Latn    61901    atla1278
+ceb_Latn    18149215    aust1307    bci_Latn    384059    atla1278    abn_Latn    61830    atla1278
+heb_Hebr    18128962    afro1255    yes    chk_Latn    380596    aust1307    ldi_Latn    61827    atla1278
+hrv_Latn    17882932    indo1319    yes    roh_Latn    377067    indo1319    ayr_Latn    61570    ayma1253
+glg_Latn    17852274    indo1319    yes    aym_Latn    373329    ayma1253    gom_Deva    61140    indo1319
+fin_Latn    16730388    ural1272    yes    yap_Latn    358929    aust1307    bba_Latn    61123    atla1278
+slv_Latn    15719210    indo1319    yes    ssw_Latn    356561    atla1278    aln_Latn    60989    indo1319
+vie_Latn    15697827    aust1305    yes    quz_Latn    354781    quec1387    leh_Latn    59944    atla1278
+mkd_Cyrl    14717004    indo1319    yes    sah_Cyrl    352697    turk1311    ban_Latn    59805    aust1307
+slk_Latn    14633631    indo1319    yes    tsn_Latn    350954    atla1278    ace_Latn    59333    aust1307
+nor_Latn    14576191    indo1319    yes    lmo_Latn    348135    indo1319    pes_Arab    57511    indo1319    yes
+est_Latn    13600579    yes    ido_Latn    331239    arti1236    skg_Latn    57228    aust1307
+ltz_Latn    12997242    indo1319    abk_Cyrl    321578    abkh1242    ary_Arab    56933    afro1255
+eus_Latn    12775959    yes    zne_Latn    318871    atla1278    hus_Latn    56176    maya1287
+lit_Latn    12479626    indo1319    yes    quy_Latn    311040    quec1387    glv_Latn    55641    indo1319
+kaz_Cyrl    12378727    turk1311    yes    kam_Latn    310659    atla1278    fat_Latn    55609    atla1278
+lav_Latn    12143980    indo1319    yes    bbc_Latn    310420    aust1307    frr_Latn    55254    indo1319
+bos_Latn    11014744    indo1319    yes    vol_Latn    310399    arti1236    mwn_Latn    54805    atla1278
+epo_Latn    8737198    arti1236    yes    wal_Latn    309873    gong1255    mai_Deva    54687    indo1319
+cat_Latn    8648271    indo1319    yes    uig_Arab    307302    turk1311    yes    dua_Latn    53392    atla1278
+tha_Thai    7735209    taik1256    yes    vmw_Latn    306899    atla1278    dzo_Tibt    52732    sino1245
+ukr_Cyrl    7462046    indo1319    yes    kwn_Latn    305362    atla1278    ctd_Latn    52135    sino1245
+tgl_Latn    7411064    aust1307    yes    pam_Latn    303737    aust1307    nnb_Latn    52041    atla1278
+sin_Sinh    7293178    indo1319    yes    seh_Latn    300243    atla1278    sxn_Latn    51749    aust1307
+gle_Latn    7225513    indo1319    yes    tsc_Latn    298442    atla1278    mps_Latn    50645    tebe1251
+hin_Deva    7046700    indo1319    yes    nyk_Latn    297976    atla1278    mny_Latn    50581    atla1278
+kor_Hang    6468444    kore1284    yes    kmb_Latn    296269    atla1278    gkp_Latn    50549    mand1469
+ory_Orya    6266475    indo1319    zai_Latn    277632    otom1299    kat_Latn    50424    kart1248
+urd_Arab    6009594    indo1319    yes    gym_Latn    274512    chib1249    bjn_Latn    49068    aust1307
+swa_Latn    5989369    yes    bod_Tibt    273489    sino1245    acr_Latn    48886    maya1287
+sqi_Latn    5526836    indo1319    yes    nde_Latn    269931    atla1278    dtp_Latn    48468    aust1307
+bel_Cyrl    5319675    indo1319    yes    fon_Latn    268566    atla1278    lam_Latn    46853    atla1278
+afr_Latn    5157787    indo1319    yes    ber_Latn    264426    bik_Latn    46561
+nno_Latn    4899103    indo1319    nbl_Latn    259158    atla1278    poh_Latn    46454    maya1287
+tat_Cyrl    4708088    turk1311    kmr_Latn    256677    indo1319    phm_Latn    45862    atla1278
+ast_Latn    4683554    indo1319    guc_Latn    249044    araw1281    hrx_Latn    45716    indo1319
+mon_Cyrl    4616960    mong1349    yes    mam_Latn    248348    maya1287    quh_Latn    45566    quec1387
+hbs_Cyrl    4598073    indo1319    nia_Latn    247406    aust1307    hyw_Cyrl    45379    indo1319
+hau_Latn    4368483    afro1255    yes    nyn_Latn    241992    atla1278    rue_Cyrl    45369    indo1319
+sna_Latn    4019596    atla1278    cab_Latn    240101    araw1281    eml_Latn    44630    indo1319
+msa_Latn    3929084    yes    top_Latn    239232    toto1251    acm_Arab    44505    afro1255
+som_Latn    3916769    afro1255    yes    tog_Latn    231969    atla1278    tob_Latn    44473    guai1249
+srp_Cyrl    3864091    indo1319    yes    mco_Latn    231209    mixe1284    ach_Latn    43974    nilo1247
+mlg_Latn    3715802    yes    tzh_Latn    230706    maya1287    vep_Latn    43076    ural1272
+zul_Latn    3580113    atla1278    pms_Latn    227748    indo1319    npi_Deva    43072    indo1319
+arz_Arab    3488224    afro1255    wuu_Hani    224088    sino1245    tok_Latn    42820    arti1236
+nya_Latn    3409030    atla1278    plt_Latn    220413    aust1307    sgs_Latn    42467    indo1319
+tam_Taml    3388255    drav1251    yes    yid_Hebr    220214    indo1319    yes    lĳ_Latn    42447    indo1319
+hat_Latn    3226932    indo1319    ada_Latn    219427    atla1278    myv_Cyrl    42147    ural1272
+uzb_Latn    3223485    turk1311    yes    iba_Latn    213615    aust1307    tih_Latn    41873    aust1307
+sot_Latn    3205510    atla1278    kek_Latn    209932    maya1287    tat_Latn    41640    turk1311
+uzb_Cyrl    3029947    turk1311    koo_Latn    209375    atla1278    lfn_Latn    41632    arti1236
+cos_Latn    3015055    indo1319    sop_Latn    206501    atla1278    cgg_Latn    41196    atla1278
+als_Latn    2954874    indo1319    kac_Latn    205542    sino1245    ful_Latn    41188    atla1278
+amh_Ethi    2862985    afro1255    yes    qvi_Latn    205447    quec1387    gor_Latn    41174    aust1307
+sun_Latn    2586011    aust1307    yes    cak_Latn    204472    maya1287    ile_Latn    40984    arti1236
+war_Latn    2584810    aust1307    kbp_Latn    202877    atla1278    ium_Latn    40683    hmon1336
+div_Thaa    2418687    indo1319    ctu_Latn    201662    maya1287    teo_Latn    40203    nilo1247
+yor_Latn    2392359    atla1278    kri_Latn    201087    indo1319    kia_Latn    40035    atla1278
+fao_Latn    2365271    indo1319    mau_Latn    199134    otom1299    crh_Cyrl    39985    turk1311
+uzn_Cyrl    2293672    turk1311    scn_Latn    199068    indo1319    crh_Latn    39896    turk1311
+smo_Latn    2290439    aust1307    tyv_Cyrl    198649    turk1311    enm_Latn    39809    indo1319
+bak_Cyrl    2264196    turk1311    ina_Latn    197315    arti1236    sat_Olck    39614    aust1305
+ilo_Latn    2106531    aust1307    btx_Latn    193701    aust1307    mad_Latn    38993    aust1307
+tso_Latn    2100708    atla1278    nch_Latn    193129    utoa1244    cac_Latn    38812    maya1287
+mri_Latn    2046850    aust1307    ncj_Latn    192962    utoa1244    hnj_Latn    38611    hmon1336
+hmn_Latn    1903898    pau_Latn    190529    aust1307    ksh_Latn    38130    indo1319
+asm_Beng    1882353    indo1319    yes    toj_Latn    189651    maya1287    ikk_Latn    38071    atla1278
+hil_Latn    1798875    aust1307    pcm_Latn    187594    indo1319    sba_Latn    38040    cent2225
+nso_Latn    1619354    atla1278    dyu_Latn    186367    mand1469    zom_Latn    37013    sino1245
+ibo_Latn    1543820    atla1278    kss_Latn    185868    atla1278    bqc_Latn    36881    mand1469
+kin_Latn    1521612    atla1278    afb_Arab    183694    afro1255    bim_Latn    36835    atla1278
+hye_Armn    1463123    indo1319    yes    urh_Latn    182214    atla1278    mdy_Ethi    36370    gong1255
+oci_Latn    1449128    indo1319    quc_Latn    181559    maya1287    bts_Latn    36216    aust1307
+lin_Latn    1408460    atla1278    new_Deva    181427    sino1245    gya_Latn    35902    atla1278
+tpi_Latn    1401844    indo1319    yao_Latn    179965    atla1278    ajg_Latn    35631    atla1278
+twi_Latn    1400979    atla1278    ngl_Latn    178498    atla1278    agw_Latn    35585    aust1307
+kir_Cyrl    1397566    turk1311    yes    nyu_Latn    177483    atla1278    kom_Cyrl    35249    ural1272
+pap_Latn    1360138    indo1319    kab_Latn    176015    afro1255    knv_Latn    35196
+nep_Deva    1317291    indo1319    yes    tuk_Cyrl    175769    turk1311    giz_Latn    35040    afro1255
+azj_Latn    1315834    turk1311    xmf_Geor    174994    kart1248    hui_Latn    34926    nucl1709
+bcl_Latn    1284493    aust1307    ndc_Latn    174305    atla1278    kpg_Latn    34900    aust1307
+xho_Latn    1262364    atla1278    yes    san_Deva    165616    indo1319    yes    zea_Latn    34426    indo1319
+cym_Latn    1244783    indo1319    yes    nba_Latn    163485    atla1278    aoj_Latn    34349    nucl1708
+gaa_Latn    1222307    atla1278    bpy_Beng    162838    indo1319    csy_Latn    34126    sino1245
+ton_Latn    1216118    aust1307    ncx_Latn    162558    utoa1244    azb_Arab    33758    turk1311    yes
+tah_Latn    1190747    aust1307    qug_Latn    162500    quec1387    csb_Latn    33743    indo1319
+lat_Latn    1179913    indo1319    yes    rmn_Latn    162069    indo1319    tpm_Latn    33517    atla1278
+srn_Latn    1172349    indo1319    cjk_Latn    160645    atla1278    quw_Latn    33449    quec1387
+ewe_Latn    1161605    atla1278    arb_Arab    159884    afro1255    yes    rmy_Cyrl    33351    indo1319
+bem_Latn    1111969    atla1278    kea_Latn    158047    indo1319    ixl_Latn    33289    maya1287
+efi_Latn    1082621    atla1278    mck_Latn    157521    atla1278    mbb_Latn    33240    aust1307
+bis_Latn    1070170    indo1319    arn_Latn    155882    arau1255    pfl_Latn    33148    indo1319
+orm_Latn    1067699    yes    pdt_Latn    155485    indo1319    pcd_Latn    32867    indo1319
+haw_Latn    1062491    aust1307    her_Latn    154827    atla1278    tlh_Latn    32863    arti1236
+hmo_Latn    1033636    pidg1258    gla_Latn    152563    indo1319    yes    suz_Deva    32811    sino1245
+kat_Geor    1004297    kart1248    yes    kmr_Cyrl    151728    indo1319    gcr_Latn    32676    indo1319
+pag_Latn    983637    aust1307    mwl_Latn    150054    indo1319    jbo_Latn    32619    arti1236
+loz_Latn    964418    atla1278    nav_Latn    147702    atha1245    tbz_Latn    32264    atla1278
+fry_Latn    957422    indo1319    yes    ksw_Mymr    147674    sino1245    bam_Latn    32150    mand1469
+mya_Mymr    945180    sino1245    yes    mxv_Latn    147591    otom1299    prk_Latn    32085    aust1305
+nds_Latn    944715    indo1319    hif_Latn    147261    indo1319    jam_Latn    32048    indo1319
+run_Latn    943828    atla1278    wol_Latn    146992    atla1278    twx_Latn    32028    atla1278
+pnb_Arab    899895    indo1319    sme_Latn    146803    ural1272    nmf_Latn    31997    sino1245
+rar_Latn    894515    aust1307    gom_Latn    143937    indo1319    caq_Latn    31903    aust1305
+fij_Latn    887134    aust1307    bum_Latn    141673    atla1278    rop_Latn    31889    indo1319
+wls_Latn    882167    aust1307    mgr_Latn    138953    atla1278    tca_Latn    31852    ticu1244
+ckb_Arab    874441    indo1319    ahk_Latn    135068    sino1245    yan_Latn    31775    misu1242
+ven_Latn    860249    atla1278    kur_Arab    134160    indo1319    xav_Latn    31765    nucl1710
+zsm_Latn    859947    aust1307    yes    bas_Latn    133436    atla1278    bih_Deva    31658
+chv_Cyrl    859863    turk1311    bin_Latn    133256    atla1278    cuk_Latn    31612    chib1249
+lua_Latn    854359    atla1278    tsz_Latn    133251    tara1323    kjb_Latn    31471    maya1287
+que_Latn    838486    sid_Latn    130406    afro1255    hne_Deva    31465    indo1319
+sag_Latn    771048    atla1278    diq_Latn    128908    indo1319    wbm_Latn    31394    aust1305
+guw_Latn    767918    atla1278    srd_Latn    127064    zlm_Latn    31345    aust1307
+bre_Latn    748954    indo1319    yes    tcf_Latn    126050    otom1299    tui_Latn    31161    atla1278
+toi_Latn    745385    atla1278    bzj_Latn    124958    indo1319    ifb_Latn    30980    aust1307
+pus_Arab    731992    indo1319    yes    udm_Cyrl    121705    ural1272    izz_Latn    30894    atla1278
+che_Cyrl    728201    nakh1245    cce_Latn    120636    atla1278    rug_Latn    30857    aust1307
+pis_Latn    714783    indo1319    meu_Latn    120273    aust1307    aka_Latn    30704    atla1278
+kon_Latn    685194    chw_Latn    119751    atla1278    pxm_Latn    30698    book1242
+oss_Cyrl    683517    indo1319    cbk_Latn    118789    indo1319    kmm_Latn    30671    sino1245
+hyw_Armn    679819    indo1319    ibg_Latn    118733    aust1307    mcn_Latn    30666    afro1255
+iso_Latn    658789    atla1278    bhw_Latn    117381    aust1307    ifa_Latn    30621    aust1307
+nan_Latn    656389    sino1245    ngu_Latn    116851    utoa1244    dln_Latn    30620    sino1245
+lub_Latn    654390    atla1278    nyy_Latn    115914    atla1278    ext_Latn    30605    indo1319
+lim_Latn    652078    indo1319    szl_Latn    112496    indo1319    ksd_Latn    30550    aust1307
+tuk_Latn    649411    turk1311    ish_Latn    111814    atla1278    mzh_Latn    30517    mata1289
+tir_Ethi    649117    afro1255    naq_Latn    109747    khoe1240    llb_Latn    30480    atla1278
+tgk_Latn    636541    indo1319    toh_Latn    107583    atla1278    hra_Latn    30472    sino1245
+yua_Latn    610052    maya1287    ttj_Latn    106925    atla1278    mwm_Latn    30432    cent2225
+min_Latn    609065    aust1307    nse_Latn    105189    atla1278    krc_Cyrl    30353    turk1311
+lue_Latn    599429    atla1278    hsb_Latn    104802    indo1319    tuc_Latn    30349    aust1307
+khm_Khmr    590429    aust1305    yes    ami_Latn    104559    aust1307    mrw_Latn    30304    aust1307
+tum_Latn    589857    atla1278    alz_Latn    104392    nilo1247    pls_Latn    30136    otom1299
+tll_Latn    586530    atla1278    apc_Arab    102392    afro1255    rap_Latn    30102    aust1307
+ekk_Latn    582595    ural1272    vls_Latn    101900    indo1319    fur_Latn    30052    indo1319
+lug_Latn    566948    atla1278    mhr_Cyrl    100474    ural1272    kaa_Latn    30031    turk1311
+niu_Latn    566715    aust1307    djk_Latn    99234    indo1319    prs_Arab    26823    indo1319    yes
+tzo_Latn    540262    maya1287    wes_Latn    98492    indo1319    san_Latn    25742    indo1319    yes
+mah_Latn    534614    aust1307    gkn_Latn    97041    atla1278    som_Arab    14199    afro1255    yes
+tvl_Latn    521556    aust1307    grc_Grek    96986    indo1319    uig_Latn    9637    turk1311    yes
+jav_Latn    516833    aust1307    yes    hbo_Hebr    96484    afro1255    hau_Arab    9593    afro1255    yes
