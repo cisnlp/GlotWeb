@@ -15,7 +15,7 @@ seed_crawler:
 # LanguageDetector configuration
 language_detector:
   model_path: "model_v3.bin" # Path to the FastText model file
-  desired_language: "aeu_Latn" # Target language code
+  desired_language: "abk_Cyrl" # Target language code
   minimum_confidence: 0.7 # Minimum confidence score for language detection
   save_text: True
 

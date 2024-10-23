@@ -30,6 +30,10 @@ logging.basicConfig(
     filename=config['logging']['file_path']
 )
 
+import json
+import logging
+from typing import List, Dict, Any
+
 class SeedReader:
     def __init__(self, json_file_path: str):
         self.json_file_path = json_file_path
@@ -40,9 +44,8 @@ class SeedReader:
             with open(self.json_file_path, 'r', encoding='utf-8') as file:
                 data = json.load(file)
                 for item in data:
-                    if not all(key in item for key in ["snippet", "title", "link", "engines", 
-                                                       "category", "predicted_lid", "lid_confidence"]):
-                        raise ValueError("Missing one or more required keys in the JSON data")
+                    if not all(key in item for key in ["link", "lid_confidence", "predicted_lid"]):
+                        raise ValueError("Missing one or more required keys: 'link', 'lid_confidence', or 'predicted_lid' in the JSON data")
                 return data
         except FileNotFoundError:
             logging.error(f"File not found: {self.json_file_path}")
