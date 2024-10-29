@@ -41,6 +41,14 @@ flores_list = [
     "ydd_Hebr", "yor_Latn", "yue_Hant", "zho_Hans", "zho_Hant", "zul_Latn"
 ]
 
+IGNORED_SUBDOMAINS = [
+    "www", "en", "de", "fr", "us", "uk", "ca",
+    "mail", "webmail", "email", "ftp", "blog", 
+    "shop", "help", "support", "docs", "kb", 
+    "api", "cdn", "assets", "static", "analytics",
+    "track", "metrics", "m", "beta", "staging", 
+    "dev", "portal", "dashboard", "media", "http", "https", "www1", "www2", "www3"
+]
 
 
 # Function to load configuration
@@ -119,12 +127,30 @@ def categorize_urls(json_file):
     # Format the result
     result = []
     for site_url, links in url_categories.items():
-        site_name = urlparse(site_url).netloc.split('.')[0]  # Simple way to get site name
+        # Extract site name intelligently
+        netloc_parts = urlparse(site_url).netloc.split('.')
+        
+        # Filter out ignored subdomains
+        primary_domain_parts = [
+            part for part in netloc_parts 
+            if part.lower() not in IGNORED_SUBDOMAINS
+        ]
+        
+        # Determine the site name based on conditions
+        if primary_domain_parts:
+            # Check if the first part is short (<= 3 characters) and not ignored
+            if len(primary_domain_parts[0]) <= 3 and len(primary_domain_parts) > 1:
+                site_name = primary_domain_parts[1]  # Use the next part if available
+            else:
+                site_name = primary_domain_parts[0]  # Otherwise, use the first part
+        else:
+            site_name = netloc_parts[0]  # Fallback to the first part if all are ignored
+        
         result.append({
             "Site Name": site_name,
             "Site URL": site_url,
             "Info": 'confirmed by glotlid',
-            "confidence" : "🟩",
+            "confidence": "🟩",
             "Links": links
         })
     
