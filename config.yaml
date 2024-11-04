@@ -10,7 +10,7 @@ seed_crawler:
   max_workers: 10 # Maximum number of threads for crawling
   crawl_delay: 0.1 # Delay between each crawling request in seconds
   max_time: 600 # Maximum crawl time in seconds
-  to_visit_growth_factor: 50
+  to_visit_growth_factor: 100
 
 # LanguageDetector configuration
 language_detector:
@@ -45,3 +45,8 @@ url_settings:
   request_timeout: 10 # Timeout for HTTP requests in seconds
 
 domain_file: "filterlist.txt"
+
+batch_processing:
+  enabled: false  # Set to true to enable batch processing
+  input_labels: ["en_US", "es_ES", "fr_FR"]  # List of languages to process
+  cooldown_between_languages: 60  # Seconds to wait between processing each language
