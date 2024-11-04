@@ -238,7 +238,12 @@ def process_language(input_label: str, model: fasttext.FastText._FastText) -> No
 
     all_data = remove_entries_with_domains(all_data)
 
+    links_meta_data = {}
+
     seed_urls = [entry['link'] for entry in all_data if entry['lid_confidence'] > input_confidence]
+
+    links_meta_data['seed_urls'] = seed_urls
+    links_meta_data['seed_urls_len'] = len(seed_urls)
     
     if not seed_urls:
         logging.warning(f"No seed URLs found for language {input_label}")
@@ -247,9 +252,34 @@ def process_language(input_label: str, model: fasttext.FastText._FastText) -> No
     crawler = SeedCrawler(seed_urls)
     all_website_links = crawler.crawl_websites()
 
+    links_meta_data['all_website_links'] = list(all_website_links)  # Convert set to list for JSON serialization
+    links_meta_data['all_website_links_len'] = len(all_website_links)
+
     lang_detector = LanguageDetector(model)
     filtered_links = lang_detector.filter_seeds(all_website_links, input_label, input_confidence)
-    
+
+    links_meta_data['filtered_links'] = filtered_links
+    links_meta_data['filtered_links_len'] = len(filtered_links)
+
+    unique_links = get_uncommon_elements([link['link'] for link in filtered_links], seed_urls)  # Extract links from filtered_links
+    links_meta_data['unique_links'] = unique_links
+    links_meta_data['unique_links_len'] = len(unique_links)
+
+    # Create metadata directory if it doesn't exist
+    meta_data_dir = os.path.join(config['output']['directory'], "meta_data")
+    os.makedirs(meta_data_dir, exist_ok=True)
+
+    # Construct the filename correctly
+    meta_file_name = os.path.join(meta_data_dir, f"{input_label}_meta_data.json")
+
+    try:
+        # Open and save data to JSON
+        with open(meta_file_name, 'w', encoding='utf-8') as file:
+            json.dump(links_meta_data, file, ensure_ascii=False, indent=4)
+        logging.info(f"Successfully saved metadata to {meta_file_name}")
+    except Exception as e:
+        logging.error(f"Error saving metadata to {meta_file_name}: {e}")
+
     logging.info(f"Number of filtered links for {input_label}: {len(filtered_links)}")
 
     output_file = os.path.join(config['output']['directory'], 
@@ -262,6 +292,14 @@ def process_language(input_label: str, model: fasttext.FastText._FastText) -> No
     else:
         logging.error(f"Output file was not created for {input_label}")
 
+def get_uncommon_elements(list1, list2):
+    
+    set1 = set(list1)
+    set2 = set(list2)
+    
+    uncommon_elements = set1 - set2
+    
+    return list(uncommon_elements)
 
 def batch_process(input_labels: List[str]) -> None:
     """Process multiple languages in batch."""

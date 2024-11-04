@@ -10,7 +10,7 @@ seed_crawler:
   max_workers: 10 # Maximum number of threads for crawling
   crawl_delay: 0.1 # Delay between each crawling request in seconds
   max_time: 600 # Maximum crawl time in seconds
-  to_visit_growth_factor: 100
+  to_visit_growth_factor: 50
 
 # LanguageDetector configuration
 language_detector:
@@ -47,6 +47,6 @@ url_settings:
 domain_file: "filterlist.txt"
 
 batch_processing:
-  enabled: True  # Set to true to enable batch processing
-  input_labels: ["abk_Cyrl","cos_Latn"]  # List of languages to process
-  cooldown_between_languages: 60  # Seconds to wait between processing each language
+  enabled: True # Set to true to enable batch processing
+  input_labels: ["abk_Cyrl"] # List of languages to process
+  cooldown_between_languages: 60 # Seconds to wait between processing each language
