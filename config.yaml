@@ -47,6 +47,6 @@ url_settings:
 domain_file: "filterlist.txt"
 
 batch_processing:
-  enabled: false  # Set to true to enable batch processing
-  input_labels: ["en_US", "es_ES", "fr_FR"]  # List of languages to process
+  enabled: True  # Set to true to enable batch processing
+  input_labels: ["abk_Cyrl","cos_Latn"]  # List of languages to process
   cooldown_between_languages: 60  # Seconds to wait between processing each language
