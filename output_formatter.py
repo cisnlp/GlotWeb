@@ -2,7 +2,7 @@ import os
 import pandas as pd
 import yaml
 import pycountry
-from typing import Dict, Any, Optional
+from typing import Dict, Any, Optional, List
 import json
 import json
 from urllib.parse import urlparse
@@ -51,7 +51,6 @@ IGNORED_SUBDOMAINS = [
 ]
 
 
-# Function to load configuration
 def load_config(config_file: str) -> Dict[str, Any]:
     with open(config_file, 'r') as file:
         return yaml.safe_load(file)
@@ -67,17 +66,15 @@ def get_language_name(code: str) -> str:
     except (AttributeError, KeyError):
         return code
 
-def get_speakers(code: str) -> Optional[str]:
+def get_speakers(code: str, df: pd.DataFrame) -> Optional[str]:
     """
     Get the number of speakers from the CSV data.
     If not found by code, try to find by language name.
     Return None if no data is found.
     """
-    # Try to find by code (ISO 639-3 or ISO 639-5)
     if code in df.index:
         return df.loc[code, 'Speakers worldwide']
     
-    # If not found by code, try to find by language name
     lang_name = get_language_name(code)
     matching_rows = df[df['Name'].str.lower() == lang_name.lower()]
     if not matching_rows.empty:
@@ -85,66 +82,54 @@ def get_speakers(code: str) -> Optional[str]:
     
     return None
 
-def is_in_madlad(code):
+def is_in_madlad(code: str) -> int:
     with open('madlad_aplha_3.json', 'r') as file:
         madlad_aplha_3 = json.load(file)
-    
-    if code in madlad_aplha_3:
-        return 1
-    else:
-        return 0
-    
-def is_in_flores(langisocode693_Script):
-    if langisocode693_Script in flores_list:
-        return 1
-    else:
-        return 0
+    return 1 if code in madlad_aplha_3 else 0
 
-def is_in_glot500(langisocode693_Script):
+def is_in_flores(langisocode693_Script: str) -> int:
+    return 1 if langisocode693_Script in flores_list else 0
+
+def is_in_glot500(langisocode693_Script: str) -> int:
     with open('madlad_aplha_3.json', 'r') as file:
         glot500_aplha_3 = json.load(file)
-    
-    if langisocode693_Script in glot500_aplha_3:
-        return 1
-    else:
-        return 0
-    
-def categorize_urls(json_file):
-    # Read the JSON file
-    with open(json_file, 'r') as file:
-        data = json.load(file)
-    
-    # Create a defaultdict to store URLs by site
+    return 1 if langisocode693_Script in glot500_aplha_3 else 0
+
+def categorize_urls(json_file: str) -> List[Dict[str, Any]]:
+    try:
+        with open(json_file, 'r') as file:
+            data = json.load(file)
+    except FileNotFoundError:
+        print(f"Warning: File not found: {json_file}")
+        return []
+    except json.JSONDecodeError:
+        print(f"Warning: Invalid JSON in file: {json_file}")
+        return []
+
     url_categories = defaultdict(list)
     
-    # Categorize URLs
     for item in data:
         url = item['link']
         parsed_url = urlparse(url)
         site_url = f"{parsed_url.scheme}://{parsed_url.netloc}"
         url_categories[site_url].append(url)
     
-    # Format the result
     result = []
     for site_url, links in url_categories.items():
-        # Extract site name intelligently
         netloc_parts = urlparse(site_url).netloc.split('.')
         
-        # Filter out ignored subdomains
         primary_domain_parts = [
             part for part in netloc_parts 
             if part.lower() not in IGNORED_SUBDOMAINS
         ]
         
-        # Determine the site name based on conditions
         if primary_domain_parts:
-            # Check if the first part is short (<= 3 characters) and not ignored
             if len(primary_domain_parts[0]) <= 3 and len(primary_domain_parts) > 1:
-                site_name = primary_domain_parts[1]  # Use the next part if available
+                site_name = primary_domain_parts[1]
             else:
-                site_name = primary_domain_parts[0]  # Otherwise, use the first part
+                site_name = primary_domain_parts[0]
         else:
-            site_name = netloc_parts[0]  # Fallback to the first part if all are ignored
+            site_name = netloc_parts[0]
         
         result.append({
             "Site Name": site_name,
@@ -156,59 +141,81 @@ def categorize_urls(json_file):
     
     return result
 
-def save_language_info(language_info, language_name, config):
-    # Extract directory and file name from config
+def save_language_info(language_info: Dict[str, Any], language_name: str, config: Dict[str, Any]) -> None:
     directory = config['output']['formated_directory']
-    file_name_template = config['output']['formated_file_name']
+    file_name = config['output']['formated_file_name'].format(language=language_name)
     
-    # Replace {language} in the file name with the actual language name
-    file_name = file_name_template.format(language=language_name)
-    
-    # Ensure the directory exists
     os.makedirs(directory, exist_ok=True)
-    
-    # Create the full path
     file_path = os.path.join(directory, file_name)
     
-    # Save the dictionary to the file as JSON
-    with open(file_path, 'w') as json_file:
+    with open(file_path, 'w', encoding='utf-8') as json_file:
         json.dump(language_info, json_file, ensure_ascii=False, indent=4)
+    
+    print(f"Saved formatted output for {language_name} to {file_path}")
 
-#### Big function to be made.
+def process_single_language(langisocode693_Script: str, df: pd.DataFrame, config: Dict[str, Any]) -> None:
+    """Process a single language and generate its formatted output."""
+    code, script = langisocode693_Script.split('_')
+    
+    # Get language information
+    lang_name = get_language_name(code)
+    speakers = get_speakers(code, df)
+    
+    # Create language info dictionary
+    language_info = {
+        "Language Name": lang_name,
+        "Number of Speakers": speakers if speakers is not None else "No data",
+        "Family": '',
+        "Subgrouping": '',
+        "Supported by allenai/MADLAD-400": is_in_madlad(code),
+        "Supported by facebook/flores": is_in_flores(langisocode693_Script),
+        "Supported by cis-lmu/Glot500": is_in_glot500(langisocode693_Script)
+    }
+    
+    # Process URLs
+    json_file_name = os.path.join(
+        config['output']['directory'],
+        f"{langisocode693_Script}_crawled_output.json"
+    )
+    categorized_urls = categorize_urls(json_file_name)
+    language_info['Sites'] = categorized_urls
+    
+    # Save formatted output
+    save_language_info(language_info, langisocode693_Script, config)
 
-# Load the configuration
-config = load_config('config.yaml')
+def batch_process_languages(config: Dict[str, Any]) -> None:
+    """Process multiple languages in batch."""
+    print("Starting batch processing...")
+    
+    # Read the speakers data once for all languages
+    df = pd.read_csv('language_speakers_data.csv', usecols=['ISO Alpha-3/5', 'Name', 'Speakers worldwide'])
+    df.set_index('ISO Alpha-3/5', inplace=True)
+    
+    # Get list of languages to process
+    if config.get('batch_processing', {}).get('enabled', False):
+        languages = config['batch_processing']['input_labels']
+    else:
+        languages = [config['language_detector']['desired_language']]
+    
+    total_languages = len(languages)
+    print(f"Processing {total_languages} languages...")
+    
+    for idx, language in enumerate(languages, 1):
+        print(f"\nProcessing language {idx}/{total_languages}: {language}")
+        try:
+            process_single_language(language, df, config)
+        except Exception as e:
+            print(f"Error processing language {language}: {str(e)}")
+            continue
+    
+    print("\nBatch processing completed!")
 
-# Extract the language code and script from the config
-langisocode693_Script = config['language_detector']['desired_language']
-#langisocode693_Script = 'ada_Latn'
-code, script = langisocode693_Script.split('_')
+def main():
+    # Load configuration
+    config = load_config('config.yaml')
+    
+    # Start batch processing
+    batch_process_languages(config)
 
-# Read only the necessary columns into a pandas DataFrame
-df = pd.read_csv('language_speakers_data.csv', usecols=['ISO Alpha-3/5', 'Name', 'Speakers worldwide'])
-
-# Set "ISO Alpha-3/5" as the index for faster lookups
-df.set_index('ISO Alpha-3/5', inplace=True)
-
-# Get language name
-lang_name = get_language_name(code)
-
-# Get number of speakers
-speakers = get_speakers(code)
-# You can now use lang_name and speakers for further tasks or add them to a dictionary
-language_info = {
-    "Language Name": lang_name,
-    "Number of Speakers": speakers if speakers is not None else "No data",
-    "Family":'',
-    "Subgrouping": '',
-    "Supported by allenai/MADLAD-400": is_in_madlad(code),
-    "Supported by facebook/flores": is_in_flores(langisocode693_Script),
-    "Supported by cis-lmu/Glot500": is_in_glot500(langisocode693_Script)
-
-}
-json_file_name = config['output']['directory']+ langisocode693_Script + '_crawled_output.json'
-categorized_urls = categorize_urls(json_file_name)
-
-language_info['Sites'] = categorized_urls
-
-save_language_info(language_info, langisocode693_Script, config)
+if __name__ == "__main__":
+    main()
