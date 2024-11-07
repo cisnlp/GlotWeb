@@ -223,6 +223,7 @@ def save_to_json(data: List[Dict[str, Any]], filename: str):
         with open(filename, 'w', encoding='utf-8') as file:
             json.dump(data, file, ensure_ascii=False, indent=4)
         logging.info(f"Successfully saved data to {filename}")
+        print(f"Successfully saved data to {filename}")
     except Exception as e:
         logging.error(f"Error saving to {filename}: {e}")
 
@@ -232,6 +233,7 @@ def process_language(input_label: str, model: fasttext.FastText._FastText) -> No
     input_confidence = config['language_detector']['minimum_confidence']
     
     logging.info(f"Processing language: {input_label}")
+    print(f"Processing language: {input_label}")
     
     reader = SeedReader(json_file_path)
     all_data = reader.get_data()
@@ -308,9 +310,11 @@ def batch_process(input_labels: List[str]) -> None:
     
     total_languages = len(input_labels)
     logging.info(f"Starting batch processing for {total_languages} languages")
+    print(f"Starting batch processing for {total_languages} languages")
     
     for idx, input_label in enumerate(input_labels, 1):
         logging.info(f"Processing language {idx}/{total_languages}: {input_label}")
+        print(f"Processing language {idx}/{total_languages}: {input_label}")
         try:
             process_language(input_label, model)
         except Exception as e:
@@ -320,9 +324,11 @@ def batch_process(input_labels: List[str]) -> None:
         if idx < total_languages:
             cooldown = config.get('batch_processing', {}).get('cooldown_between_languages', 60)
             logging.info(f"Cooling down for {cooldown} seconds before processing next language")
+            print(f"Cooling down for {cooldown} seconds before processing next language")
             time.sleep(cooldown)
     
     logging.info("Batch processing completed")
+    print("Batch processing completed")
 
 if __name__ == "__main__":
     # Check if batch processing is enabled in config

@@ -49,9 +49,9 @@ domain_file: "filterlist.txt"
 batch_processing:
   enabled: True # Set to true to enable batch processing
   input_labels: [
-    "dik_Latn",
-    "crh_Latn",
-    "csy_Latn",
+  #  "dik_Latn",
+  #  "crh_Latn",
+  #  "csy_Latn",
     "dop_Latn",
     "bzj_Latn",
     "bxr_Cyrl",
