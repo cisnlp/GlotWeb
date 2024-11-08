@@ -260,12 +260,16 @@ def process_language(input_label: str, model: fasttext.FastText._FastText) -> No
     lang_detector = LanguageDetector(model)
     filtered_links = lang_detector.filter_seeds(all_website_links, input_label, input_confidence)
 
-    links_meta_data['filtered_links'] = filtered_links
+    links_meta_data['filtered_links'] = [link['link'] for link in filtered_links]
     links_meta_data['filtered_links_len'] = len(filtered_links)
 
-    unique_links = get_uncommon_elements([link['link'] for link in filtered_links], seed_urls)  # Extract links from filtered_links
+    unique_links = set_minus([link['link'] for link in filtered_links], seed_urls)  # Extract links from filtered_links
     links_meta_data['unique_links'] = unique_links
     links_meta_data['unique_links_len'] = len(unique_links)
+
+    rejected_links = set_minus(seed_urls, [link['link'] for link in filtered_links])
+    links_meta_data['rejected_links'] = rejected_links
+    links_meta_data['rejected_links_len'] = len(rejected_links)
 
     # Create metadata directory if it doesn't exist
     meta_data_dir = os.path.join(config['output']['directory'], "meta_data")
@@ -294,7 +298,7 @@ def process_language(input_label: str, model: fasttext.FastText._FastText) -> No
     else:
         logging.error(f"Output file was not created for {input_label}")
 
-def get_uncommon_elements(list1, list2):
+def set_minus(list1, list2):
     
     set1 = set(list1)
     set2 = set(list2)
