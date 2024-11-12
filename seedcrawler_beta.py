@@ -20,7 +20,6 @@ def load_config(config_file: str) -> Dict[str, Any]:
 
 config = load_config('config.yaml')
 
-# Create the directory for the log file if it doesn't exist
 log_dir = os.path.dirname(config['logging']['file_path'])
 os.makedirs(log_dir, exist_ok=True)
 
@@ -29,10 +28,6 @@ logging.basicConfig(
     format='%(asctime)s - %(levelname)s - %(message)s',
     filename=config['logging']['file_path']
 )
-
-import json
-import logging
-from typing import List, Dict, Any
 
 class SeedReader:
     def __init__(self, json_file_path: str):
@@ -76,6 +71,7 @@ class SeedReader:
         
         return filtered_data
 
+
 class SeedCrawler:
 
     def __init__(self, seed_urls):
@@ -98,12 +94,10 @@ class SeedCrawler:
 
         links = set()
         
-        # Try parsing with 'html.parser' first
         try:
             soup = BeautifulSoup(response.text, 'html.parser')
         except Exception as e:
             logging.warning(f"Error parsing {url} with html.parser: {e}")
-            # Fallback to 'lxml' parser if available
             try:
                 soup = BeautifulSoup(response.text, 'lxml')
             except ImportError:
@@ -147,8 +141,7 @@ class SeedCrawler:
                 time.sleep(config['seed_crawler']['crawl_delay'])
                 pbar.update(1)
 
-                # Check if we're making progress
-                if len(self.visited) % 10 == 0:  # Check every 10 pages
+                if len(self.visited) % 10 == 0:
                     if len(self.to_visit) > len(self.visited) * self.to_visit_growth_factor:
                         logging.warning("To-visit list growing too fast. Possible circular link structure.")
                         break
@@ -218,7 +211,6 @@ def remove_entries_with_domains(final_list):
         with open(config['domain_file'], 'r') as f:
             domains = [line.strip() for line in f.readlines()]
 
-        # Filter the final_list
         filtered_list = [
             entry for entry in final_list 
             if 'link' in entry and not any(domain in entry['link'] for domain in domains)
@@ -231,44 +223,128 @@ def save_to_json(data: List[Dict[str, Any]], filename: str):
         with open(filename, 'w', encoding='utf-8') as file:
             json.dump(data, file, ensure_ascii=False, indent=4)
         logging.info(f"Successfully saved data to {filename}")
+        print(f"Successfully saved data to {filename}")
     except Exception as e:
         logging.error(f"Error saving to {filename}: {e}")
 
-if __name__ == "__main__":
-    input_label = config['language_detector']['desired_language']
+def process_language(input_label: str, model: fasttext.FastText._FastText) -> None:
+    """Process a single language input."""
     json_file_path = os.path.join(config['seed_reader']['input_directory'], f"{input_label}.json")
     input_confidence = config['language_detector']['minimum_confidence']
-    model_path = config['language_detector']['model_path']
     
-    model = fasttext.load_model(model_path)
+    logging.info(f"Processing language: {input_label}")
+    print(f"Processing language: {input_label}")
     
     reader = SeedReader(json_file_path)
     all_data = reader.get_data()
 
     all_data = remove_entries_with_domains(all_data)
 
+    links_meta_data = {}
+
     seed_urls = [entry['link'] for entry in all_data if entry['lid_confidence'] > input_confidence]
+
+    links_meta_data['seed_urls'] = seed_urls
+    links_meta_data['seed_urls_len'] = len(seed_urls)
+    
+    if not seed_urls:
+        logging.warning(f"No seed URLs found for language {input_label}")
+        return
     
     crawler = SeedCrawler(seed_urls)
     all_website_links = crawler.crawl_websites()
 
-    # save_to_json(list(all_website_links), os.path.join(config['output']['directory'], f"{input_label}_links_before_filter.json"))
+    links_meta_data['all_website_links'] = list(all_website_links)  # Convert set to list for JSON serialization
+    links_meta_data['all_website_links_len'] = len(all_website_links)
 
     lang_detector = LanguageDetector(model)
     filtered_links = lang_detector.filter_seeds(all_website_links, input_label, input_confidence)
-    
-    logging.info(f"Number of filtered links: {len(filtered_links)}")
-    #logging.debug(f"Sample of filtered links: {filtered_links[:5]}")
 
-    # save_to_json(filtered_links, os.path.join(config['output']['directory'], f"{input_label}_links_after_filter.json"))
+    links_meta_data['filtered_links'] = [link['link'] for link in filtered_links]
+    links_meta_data['filtered_links_len'] = len(filtered_links)
 
-    output_file = os.path.join(config['output']['directory'], config['output']['output_file_name'].format(language=input_label))
+    unique_links = set_minus([link['link'] for link in filtered_links], seed_urls)  # Extract links from filtered_links
+    links_meta_data['unique_links'] = unique_links
+    links_meta_data['unique_links_len'] = len(unique_links)
+
+    rejected_links = set_minus(seed_urls, [link['link'] for link in filtered_links])
+    links_meta_data['rejected_links'] = rejected_links
+    links_meta_data['rejected_links_len'] = len(rejected_links)
+
+    # Create metadata directory if it doesn't exist
+    meta_data_dir = os.path.join(config['output']['directory'], "meta_data")
+    os.makedirs(meta_data_dir, exist_ok=True)
+
+    # Construct the filename correctly
+    meta_file_name = os.path.join(meta_data_dir, f"{input_label}_meta_data.json")
+
+    try:
+        # Open and save data to JSON
+        with open(meta_file_name, 'w', encoding='utf-8') as file:
+            json.dump(links_meta_data, file, ensure_ascii=False, indent=4)
+        logging.info(f"Successfully saved metadata to {meta_file_name}")
+    except Exception as e:
+        logging.error(f"Error saving metadata to {meta_file_name}: {e}")
+
+    logging.info(f"Number of filtered links for {input_label}: {len(filtered_links)}")
+
+    output_file = os.path.join(config['output']['directory'], 
+                              config['output']['output_file_name'].format(language=input_label))
     save_to_json(filtered_links, output_file)
-
-    logging.info(f"Final list saved. Total links: {len(filtered_links)}")
 
     if os.path.exists(output_file):
         file_size = os.path.getsize(output_file)
-        logging.info(f"Output file size: {file_size} bytes")
+        logging.info(f"Output file size for {input_label}: {file_size} bytes")
     else:
-        logging.error("Output file was not created")
+        logging.error(f"Output file was not created for {input_label}")
+
+def set_minus(list1, list2):
+    
+    set1 = set(list1)
+    set2 = set(list2)
+    
+    uncommon_elements = set1 - set2
+    
+    return list(uncommon_elements)
+
+def batch_process(input_labels: List[str]) -> None:
+    """Process multiple languages in batch."""
+    model_path = config['language_detector']['model_path']
+    model = fasttext.load_model(model_path)
+    
+    total_languages = len(input_labels)
+    logging.info(f"Starting batch processing for {total_languages} languages")
+    print(f"Starting batch processing for {total_languages} languages")
+    
+    for idx, input_label in enumerate(input_labels, 1):
+        logging.info(f"Processing language {idx}/{total_languages}: {input_label}")
+        print(f"Processing language {idx}/{total_languages}: {input_label}")
+        try:
+            process_language(input_label, model)
+        except Exception as e:
+            logging.error(f"Error processing language {input_label}: {e}")
+            continue
+        
+        if idx < total_languages:
+            cooldown = config.get('batch_processing', {}).get('cooldown_between_languages', 60)
+            logging.info(f"Cooling down for {cooldown} seconds before processing next language")
+            print(f"Cooling down for {cooldown} seconds before processing next language")
+            time.sleep(cooldown)
+    
+    logging.info("Batch processing completed")
+    print("Batch processing completed")
+
+if __name__ == "__main__":
+    # Check if batch processing is enabled in config
+    if config.get('batch_processing', {}).get('enabled', False):
+        input_labels = config['batch_processing']['input_labels']
+        if not input_labels:
+            logging.error("Batch processing enabled but no input labels provided in config")
+        else:
+            batch_process(input_labels)
+    else:
+        # Original single language processing
+        input_label = config['language_detector']['desired_language']
+        model_path = config['language_detector']['model_path']
+        model = fasttext.load_model(model_path)
+        process_language(input_label, model)
