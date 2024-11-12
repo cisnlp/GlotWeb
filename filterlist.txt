@@ -19,8 +19,6 @@ linkedin.com
 tiktok.com
 wikiislam.net
 stepbible.org
-wikipedia.org
-wikimedia.org
 classicistranieri.com
 e-alkitab.org
 festvox.org/cmu_wilderness/
@@ -89,3 +87,4 @@ fsm.bible/
 gospelweb.net
 catholicsabah.com
 glosbe.com
+ladakhibible.org
