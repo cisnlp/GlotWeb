@@ -82,6 +82,77 @@ def get_speakers(code: str, df: pd.DataFrame) -> Optional[str]:
     
     return None
 
+
+def get_number_of_speakers(file_path, iso_639_3_code):
+    """
+    Reads a TSV file and retrieves the 'estimated_number_of_speakers' for a given 'iso_639_3_code'.
+    
+    Args:
+        file_path (str): Path to the 'linguameta.tsv' file.
+        iso_639_3_code (str): The ISO 639-3 code to look up.
+        
+    Returns:
+        int or None: The estimated number of speakers for the given 'iso_639_3_code', 
+                     or None if the code is not found.
+    """
+    try:
+        # Load the TSV file into a DataFrame
+        df = pd.read_csv(file_path, sep='\t')
+    except Exception as e:
+        print(f"Error reading the file: {e}")
+        return None
+
+    # Filter the DataFrame to find the row matching the 'iso_639_3_code'
+    row = df[df['iso_639_3_code'] == iso_639_3_code]
+    if row.empty:
+        print(f"No matching row found for iso_639_3_code: {iso_639_3_code}")
+        return None
+
+    # Retrieve the value of 'estimated_number_of_speakers'
+    try:
+        estimated_speakers = row['estimated_number_of_speakers'].values[0]
+        return estimated_speakers
+    except KeyError as e:
+        print(f"Error: Column not found - {e}")
+        return None
+
+
+def get_family_name_from_iso(file_path, iso639P3code):
+    """
+    Reads a CSV file and retrieves the family name corresponding to a given 'iso639P3code'.
+    
+    Args:
+        file_path (str): Path to the 'languoid.csv' file.
+        iso639P3code (str): The ISO 639-3 code to look up.
+        
+    Returns:
+        str: The family name corresponding to the given 'iso639P3code', or None if not found.
+    """
+    # Load the CSV file into a DataFrame
+    try:
+        df = pd.read_csv(file_path)
+    except Exception as e:
+        print(f"Error reading the file: {e}")
+        return None
+
+    # Step 1: Retrieve the 'family_id' for the given 'iso639P3code'
+    family_id_row = df[df['iso639P3code'] == iso639P3code]
+    if family_id_row.empty:
+        print(f"No matching row found for iso639P3code: {iso639P3code}")
+        return None
+
+    family_id = family_id_row['family_id'].values[0]
+
+    # Step 2: Retrieve the 'name' where 'id' equals the retrieved 'family_id'
+    family_name_row = df[df['id'] == family_id]
+    if family_name_row.empty:
+        print(f"No matching row found for family_id: {family_id}")
+        return None
+
+    family_name = family_name_row['name'].values[0]
+
+    return family_name
+
 def is_in_madlad(code: str) -> int:
     with open('madlad_aplha_3.json', 'r') as file:
         madlad_aplha_3 = json.load(file)
@@ -159,13 +230,14 @@ def process_single_language(langisocode693_Script: str, df: pd.DataFrame, config
     
     # Get language information
     lang_name = get_language_name(code)
-    speakers = get_speakers(code, df)
+    speakers = get_number_of_speakers('linguameta.tsv', code)
+    family = get_family_name_from_iso('languoid.csv', code)
     
     # Create language info dictionary
     language_info = {
         "Language Name": lang_name,
         "Number of Speakers": speakers if speakers is not None else "No data",
-        "Family": '',
+        "Family": family if family is not None else "No data",
         "Subgrouping": '',
         "Supported by allenai/MADLAD-400": is_in_madlad(code),
         "Supported by facebook/flores": is_in_flores(langisocode693_Script),
