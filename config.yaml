@@ -558,7 +558,7 @@ batch_processing:
     # "qul_Latn",
     # "moc_Latn",
 ##### Checkpoint : 18.11.2024 15:07
-    "qub_Latn",
+    #### "qub_Latn", turned out to be religious
     "seh_Latn",
     "swc_Latn",
     "zea_Latn",
