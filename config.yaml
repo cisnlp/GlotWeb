@@ -559,9 +559,9 @@ batch_processing:
     # "moc_Latn",
 ##### Checkpoint : 18.11.2024 15:07
     #### "qub_Latn", turned out to be religious
-    "seh_Latn",
-    "swc_Latn",
-    "zea_Latn",
-    "way_Latn"
+    # "seh_Latn",
+    # "swc_Latn",
+    # "zea_Latn",
+    # "way_Latn"
 ]
   cooldown_between_languages: 60 # Seconds to wait between processing each language
