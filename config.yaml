@@ -49,7 +49,7 @@ url_settings:
 domain_file: "filterlist.txt"
 
 batch_processing:
-  enabled: False # Set to true to enable batch processing
+  enabled: True # Set to true to enable batch processing
   # List of languages to process
   input_labels: [
     "wal_Latn",

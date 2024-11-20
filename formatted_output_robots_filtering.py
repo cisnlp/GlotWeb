@@ -63,10 +63,13 @@ def remove_cc_blocked_site(lang_code: str, meta_data_dir: str) -> Dict[str, Any]
     return data
 
 # Process files and save cleaned data
-def process_files(input_label: List[str], meta_data_dir: str, output_dir: str) -> None:
+from tqdm import tqdm
+
+# Process files and save cleaned data
+def process_files(input_label: str, meta_data_dir: str, output_dir: str) -> None:
     os.makedirs(output_dir, exist_ok=True)
 
-    
+    print(f"Processing input label: {input_label}")
     cleaned_data = remove_cc_blocked_site(input_label, meta_data_dir)
     output_path = os.path.join(output_dir, f"{input_label}.json")
 
@@ -84,9 +87,10 @@ if __name__ == "__main__":
     if config['batch_processing']['enabled']:
         input_labels = config['batch_processing']['input_labels']
     else:
-        input_labels = [] 
+        input_labels = []
         input_labels.append(config['language_detector']['desired_language'])
     
-    # Process and save cleaned data
-    for input_label in input_labels:
+    # Process and save cleaned data with tqdm
+    for input_label in tqdm(input_labels, desc="Processing input labels"):
         process_files(input_label, meta_data_dir, output_dir)
+
