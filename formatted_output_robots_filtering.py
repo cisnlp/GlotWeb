@@ -66,13 +66,13 @@ def remove_cc_blocked_site(lang_code: str, meta_data_dir: str) -> Dict[str, Any]
 def process_files(input_labels: List[str], meta_data_dir: str, output_dir: str) -> None:
     os.makedirs(output_dir, exist_ok=True)
 
-    for input_label in input_labels:
-        cleaned_data = remove_cc_blocked_site(input_label, meta_data_dir)
-        output_path = os.path.join(output_dir, f"{input_label}.json")
+    
+    cleaned_data = remove_cc_blocked_site(input_label, meta_data_dir)
+    output_path = os.path.join(output_dir, f"{input_label}.json")
 
-        with open(output_path, 'w', encoding='utf-8') as file:
-            json.dump(cleaned_data, file, indent=4, ensure_ascii=False)
-        print(f"Processed and saved: {output_path}")
+    with open(output_path, 'w', encoding='utf-8') as file:
+        json.dump(cleaned_data, file, indent=4, ensure_ascii=False)
+    print(f"Processed and saved: {output_path}")
 
 # Main processing
 if __name__ == "__main__":
@@ -84,7 +84,9 @@ if __name__ == "__main__":
     if config['batch_processing']['enabled']:
         input_labels = config['batch_processing']['input_labels']
     else:
-        input_labels = [config['language_detector']['desired_language']]
-
+        input_labels = [] 
+        input_labels.append(config['language_detector']['desired_language'])
+    
     # Process and save cleaned data
-    process_files(input_labels, meta_data_dir, output_dir)
+    for input_label in input_labels:
+        process_files(input_label, meta_data_dir, output_dir)

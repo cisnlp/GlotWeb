@@ -26,6 +26,7 @@ output:
   formated_directory: "output/formatted/"
   formated_file_name: "{language}.json"
   cleaned_directory: "output/robots_filtered"
+  text_files_directory: "output/text_files"
 
 # Logging configuration
 logging:
