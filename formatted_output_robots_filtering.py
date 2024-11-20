@@ -63,7 +63,7 @@ def remove_cc_blocked_site(lang_code: str, meta_data_dir: str) -> Dict[str, Any]
     return data
 
 # Process files and save cleaned data
-def process_files(input_labels: List[str], meta_data_dir: str, output_dir: str) -> None:
+def process_files(input_label: List[str], meta_data_dir: str, output_dir: str) -> None:
     os.makedirs(output_dir, exist_ok=True)
 
     
