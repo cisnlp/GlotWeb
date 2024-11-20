@@ -2,6 +2,7 @@ import os
 import yaml
 import json
 from typing import List, Dict, Any
+from tqdm import tqdm  # Add tqdm for progress bars
 
 
 def load_config(config_file: str) -> Dict[str, Any]:
@@ -39,13 +40,18 @@ def generate_text_file(
     text_files_output_dir: str
 ):
     """Generate a text file containing filtered and concatenated data."""
+    print(f"Processing code: {code}")  # Indicate which code is being processed
+    
     # Load the required data
     crawled_data = load_crawled_output(code, crawled_output_dir)
     robots_filtered_data = load_robots_filtered_output(code, robots_filtered_output_dir)
     full_list = set(get_full_list(robots_filtered_data))  # Use a set for O(1) lookups
 
-    # Collect matching text
-    text_parts = [item['text'] for item in crawled_data if item['link'] in full_list]
+    # Collect matching text with tqdm for progress indication
+    text_parts = []
+    for item in tqdm(crawled_data, desc=f"Filtering {code}", unit="item"):
+        if item['link'] in full_list:
+            text_parts.append(item['text'])
 
     # Ensure the output directory exists
     os.makedirs(text_files_output_dir, exist_ok=True)
@@ -71,8 +77,8 @@ def main():
     else:
         input_labels = [code]
 
-    # Process each label
-    for label in input_labels:
+    # Process each label with tqdm for progress tracking
+    for label in tqdm(input_labels, desc="Processing labels", unit="label"):
         generate_text_file(label, crawled_output_dir, robots_filtered_output_dir, text_files_output_dir)
 
 
