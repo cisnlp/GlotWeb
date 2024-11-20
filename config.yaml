@@ -15,7 +15,7 @@ seed_crawler:
 # LanguageDetector configuration
 language_detector:
   model_path: "model_v3.bin" # Path to the FastText model file
-  desired_language: "bcc_Arab" # Target language code
+  desired_language: "und_Sylo" # Target language code
   minimum_confidence: 0.7 # Minimum confidence score for language detection
   save_text: True
 
@@ -25,6 +25,7 @@ output:
   output_file_name: "{language}_crawled_output.json" # Output file pattern
   formated_directory: "output/formatted/"
   formated_file_name: "{language}.json"
+  cleaned_directory: "output/robots_filtered"
 
 # Logging configuration
 logging:
@@ -562,6 +563,7 @@ batch_processing:
     # "seh_Latn",
     # "swc_Latn",
     # "zea_Latn",
-    # "way_Latn"
+    # "way_Latn",
+    ahk_Latn
 ]
   cooldown_between_languages: 60 # Seconds to wait between processing each language
