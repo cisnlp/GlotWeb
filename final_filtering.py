@@ -55,7 +55,6 @@ def filter_list_urls(urls, domain_filter):
     list: Filtered list of URLs
     """
     def should_filter(url):
-        # Parse the URL to extract the domain
         parsed_url = urlparse(f'http://{url}')
          
         # Check if any filter domain matches the URL
@@ -65,7 +64,6 @@ def filter_list_urls(urls, domain_filter):
             for filter_domain in domain_filter
         )
     
-    # Correct return statement that filters the URLs
     return [url for url in urls if not should_filter(url)]
 
 def filter_meta_data(meta_data):
