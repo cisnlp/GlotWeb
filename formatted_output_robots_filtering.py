@@ -4,6 +4,7 @@ import json
 from typing import List, Dict, Any
 import requests
 from urllib.parse import urlparse
+from tqdm import tqdm
 
 # Load configuration from a YAML file
 def load_config(config_file: str) -> Dict[str, Any]:
@@ -63,7 +64,7 @@ def remove_cc_blocked_site(lang_code: str, meta_data_dir: str) -> Dict[str, Any]
     return data
 
 # Process files and save cleaned data
-from tqdm import tqdm
+
 
 # Process files and save cleaned data
 def process_files(input_label: str, meta_data_dir: str, output_dir: str) -> None:
