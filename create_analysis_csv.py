@@ -61,8 +61,8 @@ def create_csv(code_list, formatted_output_path, text_files_path, meta_data_path
             
             # Populate the CSV row with metadata
             row['active_seed_urls'] = meta_data.get('active_seed_urls_len', '')  
-            row['acquired_urls'] = data.get('filtered_links_len', '')
-            row['newly_discovered_urls'] = data.get('unique_links_len', '')  
+            row['acquired_urls'] = meta_data.get('filtered_links_len', '')
+            row['newly_discovered_urls'] = meta_data.get('unique_links_len', '')  
             
             # Write the row to the CSV
             writer.writerow(row)
