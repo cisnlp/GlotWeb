@@ -15,7 +15,7 @@ seed_crawler:
 # LanguageDetector configuration
 language_detector:
   model_path: "model_v3.bin" # Path to the FastText model file
-  desired_language: "bcc_Arab" # Target language code
+  desired_language: "syl_Sylo" # Target language code
   minimum_confidence: 0.7 # Minimum confidence score for language detection
   save_text: True
 
@@ -35,7 +35,7 @@ logging:
 
 # Progress bar configuration
 progress_bar:
-  enabled: true # Enable or disable tqdm progress bar
+  enabled: False # Enable or disable tqdm progress bar
 
 # ThreadPoolExecutor configuration
 executor:
@@ -49,7 +49,7 @@ url_settings:
 domain_file: "filterlist.txt"
 
 batch_processing:
-  enabled: True # Set to true to enable batch processing
+  enabled: False # Set to true to enable batch processing
   # List of languages to process
   input_labels: [
     "wal_Latn",
