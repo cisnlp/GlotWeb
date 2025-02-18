@@ -1,0 +1,8 @@
+model_v3.bin
+input/
+output/
+search_dump/
+logs/
+misc-code/.DS_Store
+.DS_Store
+output.zip
