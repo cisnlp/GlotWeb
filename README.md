@@ -91,7 +91,7 @@ The iso code for the input text file can be either 2 lettered format or 3 letter
 Run the script using:
 pwd should be be root of the directory.
 ```bash
-python search_service.py
+python pipeline/search_service.py
 ```
 The search results will be saved in the specified output directory (e.g., search_dump) as JSON files named according to the specified prefix and index range, e.g., results_0-10.json.
 
@@ -114,15 +114,6 @@ Ensure you have the following Python packages installed:
 ```bash
 pip install fasttext trafilatura urllib3 tqdm pyyaml
 ```
-## Required Files
-The script requires a YAML configuration file specifying paths to necessary files:
-
-- filter_config.yaml (example below)
-- JSON file with web search results
-- List of ISO language codes
-- FastText language identification model
-- Domain filter list
-  
 Configuration already provided in the repository and must be changed according to user preferneces. Examples below:
 
 ```yaml
@@ -139,4 +130,5 @@ pwd should be be root of the directory.
 ```bash
 python pipeline/language_filter.py
 ```
+
 # Step 3: Seacrch and scrape with seeds
