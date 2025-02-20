@@ -104,4 +104,18 @@ You can easily adjust the following parameters in the config.yaml file:
 
 # Step 2: Filter and generate seeds
 
+## Overview
+This script filters web search dump/results based on domain restrictions, scrapes web pages, and performs language identification using GlotLID, a FastText model. The processed data is stored in JSON format categorized by predicted languages.
+
+## Prerequisites
+### Dependencies
+Ensure you have the following Python packages installed:
+
+```bash
+pip install fasttext trafilatura urllib3 tqdm pyyaml
+```bash
+
+
+
+
 # Step 3: Seacrch and scrape with seeds
