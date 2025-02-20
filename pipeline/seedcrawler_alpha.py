@@ -18,7 +18,7 @@ def load_config(config_file: str) -> Dict[str, Any]:
     with open(config_file, 'r') as file:
         return yaml.safe_load(file)
 
-config = load_config('config.yaml')
+config = load_config('pipeline/config.yaml')
 
 log_dir = os.path.dirname(config['logging']['file_path'])
 os.makedirs(log_dir, exist_ok=True)
