@@ -89,7 +89,7 @@ The iso code for the input text file can be either 2 lettered format or 3 letter
 
 ### Usage
 Run the script using:
-
+pwd should be be root of the directory.
 ```bash
 python search_service.py
 ```
@@ -105,7 +105,7 @@ You can easily adjust the following parameters in the config.yaml file:
 # Step 2: Filter and generate seeds
 
 ## Overview
-This script filters web search dump/results based on domain restrictions, scrapes web pages, and performs language identification using GlotLID, a FastText model. The processed data is stored in JSON format categorized by predicted languages.
+This script filters web search dump/results based on domain restrictions, scrapes web pages, and performs language identification a FastText model for which we chose GlotLID. The processed data is stored in JSON format categorized by predicted languages.
 
 ## Prerequisites
 ### Dependencies
@@ -113,9 +113,30 @@ Ensure you have the following Python packages installed:
 
 ```bash
 pip install fasttext trafilatura urllib3 tqdm pyyaml
+```
+## Required Files
+The script requires a YAML configuration file specifying paths to necessary files:
+
+- filter_config.yaml (example below)
+- JSON file with web search results
+- List of ISO language codes
+- FastText language identification model
+- Domain filter list
+  
+Configuration already provided in the repository and must be changed according to user preferneces. Examples below:
+
+```yaml
+model_path: "path/to/fasttext/model"
+domain_file: "path/to/domain_filter.txt"
+json_filename: "path/to/input.json"
+iso_list_file: "path/to/iso_list.json"
+output_directory: "path/to/output"
+```
+
+## Running the Script
+Execute the script with:
+pwd should be be root of the directory.
 ```bash
-
-
-
-
+python pipeline/language_filter.py
+```
 # Step 3: Seacrch and scrape with seeds
