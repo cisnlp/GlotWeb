@@ -94,6 +94,6 @@ class LanguageFilter:
         print("DONE ALL")
 
 if __name__ == "__main__":
-    config_file = "filter_config.yaml"
+    config_file = "pipeline/filter_config.yaml"
     filter_instance = LanguageFilter(config_file)
     filter_instance.run()
