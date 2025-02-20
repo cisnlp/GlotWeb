@@ -65,6 +65,6 @@ class SearchService:
                     raise
 
 if __name__ == "__main__":
-    config_file = "search_config.yaml"
+    config_file = "pipeline/search_config.yaml"
     search_service = SearchService(config_file)
     search_service.search_and_save_results()

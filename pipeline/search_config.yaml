@@ -8,7 +8,7 @@ num_results: 50
 max_retries: 3
 retry_wait_time: 2
 output_file_prefix: "results"
-input_file: "randomsample.txt"
+input_file: "metadata/randomsample.txt"
 start_index: 0
 end_index: 10
 output_directory: "search_dump"
