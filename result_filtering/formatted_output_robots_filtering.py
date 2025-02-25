@@ -80,7 +80,7 @@ def process_files(input_label: str, meta_data_dir: str, output_dir: str) -> None
 
 # Main processing
 if __name__ == "__main__":
-    config = load_config('config.yaml')
+    config = load_config('pipeline/config.yaml')
     meta_data_dir = config['output']['formated_directory']
     output_dir = config['output']['cleaned_directory']
 

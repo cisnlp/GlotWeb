@@ -11,7 +11,7 @@ def load_config(config_file: str) -> Dict[str, Any]:
     with open(config_file, 'r') as file:
         return yaml.safe_load(file)
 
-config = load_config('config.yaml')
+config = load_config('pipeline/config.yaml')
 
 def remove_entries_with_domains(final_list):
         with open(config['domain_file'], 'r') as f:
@@ -90,7 +90,7 @@ def filter_meta_data(meta_data):
 
 
 def main():
-    config = load_config('config.yaml')
+    config = load_config('pipeline/config.yaml')
     crawled_output_dir = config['output']['directory']
     code = config['language_detector']['desired_language']
     meta_data_dir = os.path.join(config['output']['directory'], "meta_data")

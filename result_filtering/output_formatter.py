@@ -154,7 +154,7 @@ def get_family_name_from_iso(file_path, iso639P3code):
     return family_name
 
 def is_in_madlad(code: str) -> int:
-    with open('madlad_aplha_3.json', 'r') as file:
+    with open('metadata/madlad_aplha_3.json', 'r') as file:
         madlad_aplha_3 = json.load(file)
     return 1 if code in madlad_aplha_3 else 0
 
@@ -162,7 +162,7 @@ def is_in_flores(langisocode693_Script: str) -> int:
     return 1 if langisocode693_Script in flores_list else 0
 
 def is_in_glot500(langisocode693_Script: str) -> int:
-    with open('madlad_aplha_3.json', 'r') as file:
+    with open('metadata/glot500_iso_code.json', 'r') as file:
         glot500_aplha_3 = json.load(file)
     return 1 if langisocode693_Script in glot500_aplha_3 else 0
 
@@ -230,8 +230,8 @@ def process_single_language(langisocode693_Script: str, df: pd.DataFrame, config
     
     # Get language information
     lang_name = get_language_name(code)
-    speakers = get_number_of_speakers('linguameta.tsv', code)
-    family = get_family_name_from_iso('languoid.csv', code)
+    speakers = get_number_of_speakers('metadata/linguameta.tsv', code)
+    family = get_family_name_from_iso('metadata/languoid.csv', code)
     
     # Create language info dictionary
     language_info = {
@@ -260,7 +260,7 @@ def batch_process_languages(config: Dict[str, Any]) -> None:
     print("Starting batch processing...")
     
     # Read the speakers data once for all languages
-    df = pd.read_csv('language_speakers_data.csv', usecols=['ISO Alpha-3/5', 'Name', 'Speakers worldwide'])
+    df = pd.read_csv('metadata/language_speakers_data.csv', usecols=['ISO Alpha-3/5', 'Name', 'Speakers worldwide'])
     df.set_index('ISO Alpha-3/5', inplace=True)
     
     # Get list of languages to process
@@ -284,7 +284,7 @@ def batch_process_languages(config: Dict[str, Any]) -> None:
 
 def main():
     # Load configuration
-    config = load_config('config.yaml')
+    config = load_config('pipeline/config.yaml')
     
     # Start batch processing
     batch_process_languages(config)
