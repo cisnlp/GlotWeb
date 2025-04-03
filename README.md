@@ -207,14 +207,14 @@ Unique new links
 
 Rejected links
 
-Usage
+### Usage
 Single Language Processing
-bash
-Copy
+```bash
 python pipeline/seed_crawler.py
+```
 Configure desired_language in config.yaml first.
 
-Batch Processing
+#### Batch Processing:
 Enable batch mode in config.yaml:
 
 ```yaml
@@ -229,35 +229,24 @@ python pipeline/seed_crawler_beta.py
 ```
 ### Customization Options
 - Crawling Behavior:
-
 Adjust max_pages and max_time to control crawling scope
-
 Modify crawl_delay to be more/less aggressive
-
 - Language Detection:
-
 Change minimum_confidence for stricter/looser filtering
-
 - Set save_text: True to store scraped content
-
 - Performance:
-
 Increase max_workers for faster processing (requires more CPU)
-
 Adjust cooldown_between_languages for batch processing
 
 ### Output:
 
-Change output directory and filename patterns
-
-Metadata collection is always enabled
+- Change output directory and filename patterns
+- Metadata collection is always enabled
 
 ### Notes
-The script automatically skips domains listed in your domain filter file
-
-Progress bars are enabled by default (can be disabled in config)
-
-Comprehensive logging helps troubleshoot issues
+- The script automatically skips domains listed in your domain filter file
+- Progress bars are enabled by default (can be disabled in config)
+- Comprehensive logging helps troubleshoot issues
 
 # Step 4: Filtering and Deduplication
 
@@ -370,3 +359,47 @@ python result_filtering/robots_compliance_filter.py
 - Only checks for explicit CCBot blocks (not general User-agent: *)
 - Processes domains sequentially with 5-second timeout
 - Preserves all non-URL metadata (speaker counts, language family etc.)
+
+## Step 4.4: Final Cleaning and Deduplication
+
+### Purpose
+Performs final data cleaning through URL normalization and deduplication to create a polished dataset.
+
+### Process Overview
+1. **HTTP/HTTPS Merging** (`http_merge_2.py`):
+   - Combines duplicate sites with different protocols (http/https)
+   - Standardizes www/non-www variants
+   - Preserves all unique links
+
+2. **Hash Fragment Removal** (`remove_all_hash.py`):
+   - Removes URL fragments (#section)
+   - Deduplicates URLs that only differ by fragments
+
+### Configuration
+```yaml
+output:
+  robots_filtered: "output/robots_filtered"  # Input from Step 4.3
+  http_merged: "output/http_merged"         # Intermediate output
+  deduplication: "output/deduplication"     # Final output
+```
+### Usage
+```bash
+# Run protocol merging first
+python result_filtering/http_merge_2.py
+
+# Then run hash removal
+python result_filtering/remove_all_hash.py
+```
+
+### Key Features
+- Protocol-agnostic site merging
+- Consistent URL normalization
+- Fragment removal while preserving query parameters
+- Order-preserving deduplication
+
+### Output
+Cleaned JSON files with:
+
+- Unified site entries
+- Normalized URLs
+- No duplicate content
