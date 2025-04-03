@@ -153,20 +153,20 @@ The script uses config.yaml with these key parameters:
 
 ```yaml
 seed_crawler:
-  max_pages: 1000            # Maximum pages to crawl per language
+  max_pages: 100            # Maximum pages to crawl per language
   max_time: 3600              # Maximum crawling time in seconds
   crawl_delay: 1              # Delay between requests
-  to_visit_growth_factor: 5   # Threshold for detecting circular links
+  to_visit_growth_factor: 50   # Threshold for detecting circular links
   max_workers: 4              # Threads for parallel processing
 
 url_settings:
   request_timeout: 10         # Timeout for web requests
-  max_url_length: 200         # Maximum URL length to consider
+  max_url_length: 65000         # Maximum URL length to consider
 
 language_detector:
   model_path: "path/to/model" # Path to FastText model
   minimum_confidence: 0.7     # Minimum language confidence score
-  desired_language: "aa"      # Target language code
+  desired_language: "bpy_Beng"      # Target language code
   save_text: False            # Whether to save scraped text
 
 output:
@@ -221,42 +221,40 @@ Enable batch mode in config.yaml:
 batch_processing:
   enabled: True
   input_labels: ["syl_Sylo", "bpy_Beng", "akh_Latn"]  # Your target languages
-``
+```
 Run the same command:
 
-bash
-Copy
-python pipeline/seed_crawler.py
-Customization Options
-Crawling Behavior:
+```bash
+python pipeline/seed_crawler_beta.py
+```
+### Customization Options
+- Crawling Behavior:
 
 Adjust max_pages and max_time to control crawling scope
 
 Modify crawl_delay to be more/less aggressive
 
-Language Detection:
+- Language Detection:
 
 Change minimum_confidence for stricter/looser filtering
 
-Set save_text: True to store scraped content
+- Set save_text: True to store scraped content
 
-Performance:
+- Performance:
 
 Increase max_workers for faster processing (requires more CPU)
 
 Adjust cooldown_between_languages for batch processing
 
-Output:
+### Output:
 
 Change output directory and filename patterns
 
 Metadata collection is always enabled
 
-Notes
+### Notes
 The script automatically skips domains listed in your domain filter file
 
 Progress bars are enabled by default (can be disabled in config)
 
 Comprehensive logging helps troubleshoot issues
-
-The crawler respects robots.txt conventions
