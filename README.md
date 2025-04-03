@@ -438,3 +438,26 @@ Cleaned JSON files with:
 - Unified site entries
 - Normalized URLs
 - No duplicate content
+
+# Step 5: Final Output and Usage
+
+## Results
+After completing all steps, you will obtain:
+
+✔ **Per-language datasets** containing:
+   - Verified web links with metadata
+   - Language information (speaker counts, family)
+   - Dataset compatibility flags
+
+## Using GlotWeb Data
+The generated datasets enable:
+
+- **Language resource discovery**: Find authentic web content in minority languages
+- **Dataset augmentation**: Expand existing NLP resources with verified links
+- **Research applications**: Study digital language representation patterns
+- **Web archiving**: Preserve endangered language content
+
+## Next Steps
+1. Explore results in the interactive [GlotWeb demo](https://huggingface.co/spaces/cis-lmu/GlotWeb)
+2. Integrate with NLP pipelines using the standardized JSON format
+3. Contribute back by reporting new language resources via GitHub issues
