@@ -439,25 +439,43 @@ Cleaned JSON files with:
 - Normalized URLs
 - No duplicate content
 
-# Step 5: Final Output and Usage
+✅ **Processed datasets** in `output/cleaned_output/[LANG].json` containing:
+- Verified web links
+- Language metadata (speakers, family)
+- Domain categorization
+- Compatibility flags (FLORES/MADLAD/Glot500)
 
-## Results
-After completing all steps, you will obtain:
+✅ **Metadata reports** in `output/meta_data/` with:
+- Crawling statistics
+- Domain distributions
+- Filtering metrics
 
-✔ **Per-language datasets** containing:
-   - Verified web links with metadata
-   - Language information (speaker counts, family)
-   - Dataset compatibility flags
+# Step 5: Dataset Validation & Community Contribution
 
-## Using GlotWeb Data
-The generated datasets enable:
+## Community Auditing Request
+We urgently need **native speakers** and **linguists** to validate results:
 
-- **Language resource discovery**: Find authentic web content in minority languages
-- **Dataset augmentation**: Expand existing NLP resources with verified links
-- **Research applications**: Study digital language representation patterns
-- **Web archiving**: Preserve endangered language content
+### How to Audit
+1. **Explore your language** in the [GlotWeb Demo](https://huggingface.co/spaces/cis-lmu/GlotWeb)
+2. **Check 10-20 random links** for:
+   - Actual language content (not machine translation)
+   - Cultural/educational value
+   - Correct language/dialect labeling
+3. **Report issues** via:
+   - [GitHub Issues](https://github.com/cisnlp/GlotWeb/issues)
+   - Email: [your contact email]
 
-## Next Steps
-1. Explore results in the interactive [GlotWeb demo](https://huggingface.co/spaces/cis-lmu/GlotWeb)
-2. Integrate with NLP pipelines using the standardized JSON format
-3. Contribute back by reporting new language resources via GitHub issues
+### Why This Matters
+| Impact Area | Community Role |
+|------------|---------------|
+| **Data Quality** | Remove spam/misclassified content |
+| **Language Preservation** | Identify valuable resources |
+| **NLP Development** | Improve training data for LLMs |
+
+## Get Involved
+- **Speakers**: Join our [Language Contributor Program](link)
+- **Researchers**: Use data with citation (BibTeX forthcoming)
+- **Developers**: Extend filters via pull requests
+
+```[!NOTE]
+**Native speakers** of underrepresented languages are especially needed!
