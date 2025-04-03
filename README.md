@@ -477,6 +477,6 @@ We urgently need **native speakers** and **linguists** to validate results:
 - **Speakers**: Join us in Language auditing.
 - **Researchers**: Use data with citation (BibTeX forthcoming)
 
-```[!NOTE]
+
 **Native speakers** of underrepresented languages are especially needed!
-```
+
