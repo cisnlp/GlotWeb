@@ -460,10 +460,11 @@ We urgently need **native speakers** and **linguists** to validate results:
 2. **Check 10-20 random links** for:
    - Actual language content (not machine translation)
    - Cultural/educational value
+   - Flag as religious if content is from religious scriptures
    - Correct language/dialect labeling
 3. **Report issues** via:
    - [GitHub Issues](https://github.com/cisnlp/GlotWeb/issues)
-   - Email: [your contact email]
+   - Email: in.sefat@tum.de
 
 ### Why This Matters
 | Impact Area | Community Role |
@@ -473,9 +474,8 @@ We urgently need **native speakers** and **linguists** to validate results:
 | **NLP Development** | Improve training data for LLMs |
 
 ## Get Involved
-- **Speakers**: Join our [Language Contributor Program](link)
+- **Speakers**: Join us in Language auditing.
 - **Researchers**: Use data with citation (BibTeX forthcoming)
-- **Developers**: Extend filters via pull requests
 
 ```[!NOTE]
 **Native speakers** of underrepresented languages are especially needed!
