@@ -325,3 +325,57 @@ output:
 ```bash
 python result_filtering/format_for_glotweb.py
 ```
+
+## Step 4.3: Robots.txt Compliance Filtering
+
+### Purpose
+Filters out domains that explicitly block Common Crawl's CCBot in their robots.txt file, ensuring compliance with website crawling policies.
+
+### Key Features
+- Checks each domain's robots.txt for CCBot restrictions
+- Removes entire domains if they block CCBot
+- Preserves all other metadata while filtering
+- Handles both single-language and batch processing
+
+### Why Use It
+- Ensures ethical web scraping compliance
+- Prevents potential legal issues
+- Maintains good web citizenship by respecting robots.txt
+- Filters before final dataset compilation
+
+### Configuration
+```yaml
+output:
+  formated_directory: "formatted_output"  # Input directory (from Step 4.2)
+  cleaned_directory: "cleaned_output"    # Output directory for filtered data
+```
+### Usage
+```bash
+python pipeline/robots_compliance_filter.py
+```
+### Process Flow
+Loads formatted JSON from Step 4.2
+
+For each domain:
+
+Fetches robots.txt
+
+Checks for CCBot restrictions
+
+Saves cleaned version with compliant domains only
+
+### Output
+Maintains same structure as input
+
+Only contains domains that allow CCBot
+
+Saved as [LANGUAGE].json in cleaned directory
+
+### Notes
+If robots.txt is inaccessible, assumes crawling is allowed
+
+Only checks for explicit CCBot blocks (not general User-agent: *)
+
+Processes domains sequentially with 5-second timeout
+
+Preserves all non-URL metadata (speaker counts, language family etc.)
