@@ -351,7 +351,7 @@ output:
 ```
 ### Usage
 ```bash
-python pipeline/robots_compliance_filter.py
+python result_filtering/robots_compliance_filter.py
 ```
 ### Process Flow
 - Loads formatted JSON from Step 4.2
