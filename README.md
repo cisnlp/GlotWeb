@@ -354,28 +354,19 @@ output:
 python pipeline/robots_compliance_filter.py
 ```
 ### Process Flow
-Loads formatted JSON from Step 4.2
-
-For each domain:
-
-Fetches robots.txt
-
-Checks for CCBot restrictions
-
-Saves cleaned version with compliant domains only
+- Loads formatted JSON from Step 4.2
+- For each domain:
+- Fetches robots.txt
+- Checks for CCBot restrictions
+- Saves cleaned version with compliant domains only
 
 ### Output
-Maintains same structure as input
-
-Only contains domains that allow CCBot
-
-Saved as [LANGUAGE].json in cleaned directory
+- Maintains same structure as input
+- Only contains domains that allow CCBot
+- Saved as [LANGUAGE].json in cleaned directory
 
 ### Notes
-If robots.txt is inaccessible, assumes crawling is allowed
-
-Only checks for explicit CCBot blocks (not general User-agent: *)
-
-Processes domains sequentially with 5-second timeout
-
-Preserves all non-URL metadata (speaker counts, language family etc.)
+- If robots.txt is inaccessible, assumes crawling is allowed
+- Only checks for explicit CCBot blocks (not general User-agent: *)
+- Processes domains sequentially with 5-second timeout
+- Preserves all non-URL metadata (speaker counts, language family etc.)
