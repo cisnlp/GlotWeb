@@ -258,3 +258,43 @@ The script automatically skips domains listed in your domain filter file
 Progress bars are enabled by default (can be disabled in config)
 
 Comprehensive logging helps troubleshoot issues
+
+# Step 4: Filtering and Deduplication
+
+## Step 4.1: Domain Filtering
+
+### Purpose
+This script performs final domain filtering on crawled results to exclude unwanted domains from both the main output and metadata files.
+
+### Key Features
+- Loads crawled data and metadata JSON files
+- Applies domain filtering using the configured domain blocklist
+- Updates all metadata statistics after filtering
+- Handles both single-language and batch processing modes
+
+### Why Use It
+- Ensures final outputs comply with domain restrictions
+- Maintains consistency between data files and their metadata
+- Prepares clean data for subsequent deduplication steps
+
+### Usage
+Configure `domain_file` path in `config.yaml` and run:
+```bash
+python pipeline/final_domain_filter.py
+```
+
+### Configuration
+Uses these key config parameters:
+
+```yaml
+domain_file: "path/to/domain_filter.txt"  # List of domains to exclude
+output:
+  directory: "output"                    # Where to find/save files
+```
+### Output
+Updates both:
+
+[LANGUAGE]_filtered.json - With domain-filtered results
+
+meta_data/[LANGUAGE]_meta_data.json - With filtered statistics
+
