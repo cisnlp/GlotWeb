@@ -2,6 +2,42 @@
 
 [![Image](./assets/demo.png)](https://huggingface.co/spaces/cis-lmu/GlotWeb)
 
+## About GlotWeb
+
+GlotWeb is an advanced web indexing system specifically designed to address the digital resource gap for minority languages. Our system:
+
+- **Identifies** web content in 402+ languages through multi-source aggregation
+- **Validates** linguistic accuracy using GlotLID language identification
+- **Filters** content to ensure quality while minimizing religious bias
+- **Compiles** 169,155+ verified web links (47% in languages absent from major datasets)
+
+### Key Features
+✔ Covers languages missing from FLORES-200, MADLAD-400, and Glot500  
+✔ Open-source pipeline with reproducible results  
+✔ Interactive demo showcasing language resources  
+
+## Getting Started
+
+This documentation walks through GlotWeb's 4-step pipeline:
+
+1. **Search Setup**: Configure and run web searches
+2. **Seed Generation**: Filter initial results
+3. **Crawling**: Expand and validate links
+4. **Cleaning**: Deduplicate and finalize outputs
+
+### How to Use This Guide
+1. Follow steps sequentially (1 → 4)
+2. Each section includes:
+   - Purpose explanation
+   - Configuration options
+   - Execution commands
+   - Expected outputs
+3. Requires basic Python/Docker knowledge
+
+> **Tip**: For quick setup, clone the repository and use the provided configuration files as templates.
+
+Ready to begin? Proceed to [Step 1: Set up SearXNG and perform search](#step-1-set-up-searxng-and-perform-search).
+
 # Step 1: Set up SearXNG and perform search
 
 ##  SearXNG
