@@ -131,4 +131,129 @@ pwd should be be root of the directory.
 python pipeline/language_filter.py
 ```
 
-# Step 3: Seacrch and scrape with seeds
+# Step 3: Search and scrape with seeds
+
+## Overview
+This step takes the filtered seed URLs from Step 2 and performs deep crawling to discover additional web pages in the target languages. It includes:
+- Web crawling from seed URLs
+- Language detection using FastText (GlotLID)
+- Domain filtering
+- Parallel processing for efficiency
+- Comprehensive logging and metadata collection
+
+## Prerequisites
+### Dependencies
+Ensure you have the following Python packages installed:
+```bash
+pip install fasttext beautifulsoup4 requests trafilatura tqdm pyyaml urllib3
+Configuration
+The script uses config.yaml with these key parameters:
+
+yaml
+Copy
+seed_crawler:
+  max_pages: 1000            # Maximum pages to crawl per language
+  max_time: 3600              # Maximum crawling time in seconds
+  crawl_delay: 1              # Delay between requests
+  to_visit_growth_factor: 5   # Threshold for detecting circular links
+  max_workers: 4              # Threads for parallel processing
+
+url_settings:
+  request_timeout: 10         # Timeout for web requests
+  max_url_length: 200         # Maximum URL length to consider
+
+language_detector:
+  model_path: "path/to/model" # Path to FastText model
+  minimum_confidence: 0.7     # Minimum language confidence score
+  desired_language: "aa"      # Target language code
+  save_text: False            # Whether to save scraped text
+
+output:
+  directory: "output"         # Output directory
+  output_file_name: "{language}_filtered.json"  # Output filename pattern
+
+batch_processing:
+  enabled: False              # Enable batch mode
+  input_labels: []            # List of language codes for batch
+  cooldown_between_languages: 60  # Cool-down between languages
+Input Requirements
+Input JSON files from Step 2 (named as [LANGUAGE_CODE].json)
+
+Each JSON file should contain entries with:
+
+link: URL string
+
+lid_confidence: Confidence score (float)
+
+predicted_lid: Language code
+
+Output
+For each processed language, the script generates:
+
+[LANGUAGE_CODE]_filtered.json - Filtered URLs with metadata
+
+meta_data/[LANGUAGE_CODE]_meta_data.json - Crawling statistics including:
+
+Seed URLs used
+
+All discovered links
+
+Filtered links
+
+Unique new links
+
+Rejected links
+
+Usage
+Single Language Processing
+bash
+Copy
+python pipeline/seed_crawler.py
+Configure desired_language in config.yaml first.
+
+Batch Processing
+Enable batch mode in config.yaml:
+
+yaml
+Copy
+batch_processing:
+  enabled: True
+  input_labels: ["aa", "ab", "ae"]  # Your target languages
+Run the same command:
+
+bash
+Copy
+python pipeline/seed_crawler.py
+Customization Options
+Crawling Behavior:
+
+Adjust max_pages and max_time to control crawling scope
+
+Modify crawl_delay to be more/less aggressive
+
+Language Detection:
+
+Change minimum_confidence for stricter/looser filtering
+
+Set save_text: True to store scraped content
+
+Performance:
+
+Increase max_workers for faster processing (requires more CPU)
+
+Adjust cooldown_between_languages for batch processing
+
+Output:
+
+Change output directory and filename patterns
+
+Metadata collection is always enabled
+
+Notes
+The script automatically skips domains listed in your domain filter file
+
+Progress bars are enabled by default (can be disabled in config)
+
+Comprehensive logging helps troubleshoot issues
+
+The crawler respects robots.txt conventions
