@@ -1,7 +1,4 @@
 # GlotWeb
-
-[![Image](./assets/demo.png)](https://huggingface.co/spaces/cis-lmu/GlotWeb)
-
 ## About GlotWeb
 
 GlotWeb is an advanced web indexing system specifically designed to address the digital resource gap for minority languages. Our system:
@@ -15,6 +12,8 @@ GlotWeb is an advanced web indexing system specifically designed to address the 
 ✔ Covers languages missing from FLORES-200, MADLAD-400, and Glot500  
 ✔ Open-source pipeline with reproducible results  
 ✔ Interactive demo showcasing language resources  
+
+[![Image](./assets/demo.png)](https://huggingface.co/spaces/cis-lmu/GlotWeb)
 
 ## Getting Started
 
