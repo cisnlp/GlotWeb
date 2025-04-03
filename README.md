@@ -146,11 +146,12 @@ This step takes the filtered seed URLs from Step 2 and performs deep crawling to
 Ensure you have the following Python packages installed:
 ```bash
 pip install fasttext beautifulsoup4 requests trafilatura tqdm pyyaml urllib3
-Configuration
+```
+
+### Configuration
 The script uses config.yaml with these key parameters:
 
-yaml
-Copy
+```yaml
 seed_crawler:
   max_pages: 1000            # Maximum pages to crawl per language
   max_time: 3600              # Maximum crawling time in seconds
@@ -176,18 +177,20 @@ batch_processing:
   enabled: False              # Enable batch mode
   input_labels: []            # List of language codes for batch
   cooldown_between_languages: 60  # Cool-down between languages
-Input Requirements
-Input JSON files from Step 2 (named as [LANGUAGE_CODE].json)
+```
+
+### Input Requirements
+Input JSON files from Step 2 (named as [LANGUAGECODE_SCRIPT].json)
 
 Each JSON file should contain entries with:
 
-link: URL string
+- link: URL string
 
-lid_confidence: Confidence score (float)
+- lid_confidence: Confidence score (float)
 
-predicted_lid: Language code
+- predicted_lid: Language code
 
-Output
+### Output
 For each processed language, the script generates:
 
 [LANGUAGE_CODE]_filtered.json - Filtered URLs with metadata
@@ -214,11 +217,11 @@ Configure desired_language in config.yaml first.
 Batch Processing
 Enable batch mode in config.yaml:
 
-yaml
-Copy
+```yaml
 batch_processing:
   enabled: True
-  input_labels: ["aa", "ab", "ae"]  # Your target languages
+  input_labels: ["syl_Sylo", "bpy_Beng", "akh_Latn"]  # Your target languages
+``
 Run the same command:
 
 bash
