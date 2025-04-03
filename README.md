@@ -11,7 +11,7 @@ GlotWeb is an advanced web indexing system specifically designed to address the 
 ### Key Features
 ✔ Covers languages missing from FLORES-200, MADLAD-400, and Glot500  
 ✔ Open-source pipeline with reproducible results  
-✔ Interactive demo showcasing language resources  
+✔ Interactive demo showcasing language resources (cis-lmu-glotweb.hf.space)
 
 [![Image](./assets/demo.png)](https://huggingface.co/spaces/cis-lmu/GlotWeb)
 
