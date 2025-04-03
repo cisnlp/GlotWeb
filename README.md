@@ -280,7 +280,7 @@ This script performs final domain filtering on crawled results to exclude unwant
 ### Usage
 Configure `domain_file` path in `config.yaml` and run:
 ```bash
-python pipeline/final_domain_filter.py
+python result_filtering/final_domain_filter.py
 ```
 
 ### Configuration
@@ -298,3 +298,30 @@ Updates both:
 
 meta_data/[LANGUAGE]_meta_data.json - With filtered statistics
 
+## Step 4.2: Formatting Output for GlotWeb
+
+### Purpose
+Transforms crawled language data into a structured format suitable for GlotWeb visualization, enriching it with metadata and linguistic information.
+
+### Key Features
+- Extracts language metadata (speaker counts, language family)
+- Checks inclusion in major multilingual datasets (MADLAD-400, Flores, Glot500)
+- Organizes URLs by domain with site categorization
+- Handles both single-language and batch processing
+
+### Why Use It
+- Creates standardized format for GlotWeb frontend
+- Enriches raw data with valuable linguistic metadata
+- Provides domain-level organization of web resources
+- Generates compatibility flags for popular multilingual datasets
+
+### Configuration
+```yaml
+output:
+  formated_directory: "formatted_output"  # Output directory
+  formated_file_name: "{language}_formatted.json"  # Output filename pattern
+```
+### Usage
+```bash
+python result_filtering/format_for_glotweb.py
+```
