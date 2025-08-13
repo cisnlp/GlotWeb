@@ -7,3 +7,5 @@ output.zip
 output/
 crawler_input/
 lang_dump_confidence/
+collected_language_data.csv
+get_file_names.py

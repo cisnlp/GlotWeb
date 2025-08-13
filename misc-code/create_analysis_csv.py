@@ -11,7 +11,7 @@ def load_config(config_file: str) -> Dict[str, Any]:
         return yaml.safe_load(file)
 
 
-def create_csv(code_list, formatted_output_path, text_files_path, meta_data_path):
+def create_csv(code_list, formatted_output_path, meta_data_path):
     """
     Creates a CSV file containing data extracted from JSON and text files.
     
@@ -36,43 +36,46 @@ def create_csv(code_list, formatted_output_path, text_files_path, meta_data_path
             
             # Read the JSON file for the current code
             json_file_path = os.path.join(formatted_output_path, f"{code}.json")
-            with open(json_file_path, 'r', encoding='utf-8') as json_file:
-                data = json.load(json_file)
-            
-            # Populate the CSV row with data
-            row['alpha_3_code'] = code
-            row['language_name'] = data.get('Language Name', '')  
-            row['num_speakers'] = data.get('Number of Speakers', '')  
-            row['family'] = data.get('Family','')
-            row['madlad'] = data.get('Supported by allenai/MADLAD-400', '') 
-            row['flores'] = data.get('Supported by facebook/flores', '')  
-            row['glot500'] = data.get('Supported by cis-lmu/Glot500','')
-            
-            # Read the text file for the current code
-            text_file_path = os.path.join(text_files_path, f"{code}.txt")
-            with open(text_file_path, 'r', encoding='utf-8') as text_file:
-                text_content = text_file.read()
-            row['text_len'] = len(text_content)
-            
-            # Read the metadata JSON file for the current code
-            meta_data_file_path = os.path.join(meta_data_path, f"{code}_meta_data.json")
-            with open(meta_data_file_path, 'r', encoding='utf-8') as meta_data_file:
-                meta_data = json.load(meta_data_file)
-            
-            # Populate the CSV row with metadata
-            row['active_seed_urls'] = meta_data.get('active_seed_urls_len', '')  
-            row['acquired_urls'] = meta_data.get('filtered_links_len', '')
-            row['newly_discovered_urls'] = meta_data.get('unique_links_len', '')  
-            
-            # Write the row to the CSV
-            writer.writerow(row)
+            try:
+                with open(json_file_path, 'r', encoding='utf-8') as json_file:
+                    data = json.load(json_file)
+                
+                # Populate the CSV row with data
+                row['alpha_3_code'] = code
+                row['language_name'] = data.get('Language Name', '')  
+                row['num_speakers'] = data.get('Number of Speakers', '')  
+                row['family'] = data.get('Family','')
+                row['madlad'] = data.get('Supported by allenai/MADLAD-400', '') 
+                row['flores'] = data.get('Supported by facebook/flores', '')  
+                row['glot500'] = data.get('Supported by cis-lmu/Glot500','')
+                
+                # # Read the text file for the current code
+                # text_file_path = os.path.join(text_files_path, f"{code}.txt")
+                # with open(text_file_path, 'r', encoding='utf-8') as text_file:
+                #     text_content = text_file.read()
+                # row['text_len'] = len(text_content)
+                
+                # Read the metadata JSON file for the current code
+                meta_data_file_path = os.path.join(meta_data_path, f"{code}_meta_data.json")
+                with open(meta_data_file_path, 'r', encoding='utf-8') as meta_data_file:
+                    meta_data = json.load(meta_data_file)
+                
+                # Populate the CSV row with metadata
+                row['active_seed_urls'] = meta_data.get('active_seed_urls_len', '')  
+                row['acquired_urls'] = meta_data.get('filtered_links_len', '')
+                row['newly_discovered_urls'] = meta_data.get('unique_links_len', '')  
+                
+                # Write the row to the CSV
+                writer.writerow(row)
+            except FileNotFoundError:
+                print(f"File not found for code {code}: {json_file_path} or {meta_data_file_path}")
     
     print(f"CSV saved to {output_csv_path}")
 
 if __name__ == "__main__":
-    config = load_config('config.yaml')
-    formatted_output_path = config['output']['formated_directory']
-    text_files_path = config['output']['text_files_directory']
+    config = load_config('pipeline/config.yaml')
+    formatted_output_path = '/Users/chaosefat/Desktop/GlotWeb_Main/GlotWeb/output/deduplication' #config['output']['formated_directory']
+    #text_files_path = config['output']['text_files_directory']
     meta_data_path = os.path.join(config['output']['directory'], "meta_data")
     
     code = config['language_detector']['desired_language']
@@ -82,5 +85,5 @@ if __name__ == "__main__":
     else:
         code_list = [code]
     
-    create_csv(code_list,formatted_output_path,text_files_path,meta_data_path)
+    create_csv(code_list,formatted_output_path,meta_data_path)
     
