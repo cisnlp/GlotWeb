@@ -1,4 +1,5 @@
 # GlotWeb
+## 🎉 𝗣𝗮𝗽𝗲𝗿 𝗔𝗰𝗰𝗲𝗽𝘁𝗲𝗱 𝗮𝘁 𝗪𝗪𝗪 𝟮𝟬𝟮𝟲 🎉
 ## About GlotWeb
 
 GlotWeb is an advanced web indexing system specifically designed to address the digital resource gap for minority languages. Our system:
