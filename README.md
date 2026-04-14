@@ -475,8 +475,21 @@ We urgently need **native speakers** and **linguists** to validate results:
 | **NLP Development** | Improve training data for LLMs |
 
 ## Get Involved
-- **Speakers**: Join us in Language auditing.
+- **Speakers**: Join us in Language auditing; Native speakers of underrepresented languages are especially needed!
 - **Researchers**: Use data with citation (BibTeX forthcoming)
 
-## **Native speakers** of underrepresented languages are especially needed!
 
+## Citation
+
+If you find our code and list of language URLs useful for your research, please cite the following:
+
+```
+@inproceedings{sefat2026glotweb,
+  title={Glot{W}eb: Web Indexing for Minority Languages},
+  author={Sefat, Abdullah Al and Kargaran, Amir Hossein and Yvon, Fran{\c{c}}ois and Sch{\"u}tze, Hinrich},
+  booktitle={Proceedings of the ACM Web Conference 2026},
+  pages={8469--8472},
+  year={2026},
+  url={https://dl.acm.org/doi/abs/10.1145/3774904.3792887}
+}
+```
